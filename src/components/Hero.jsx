@@ -263,6 +263,7 @@ export default function Hero({ onOpenBooking }) {
 
   return (
     <section
+      id="hero"
       ref={trackRef}
       className="relative bg-[var(--surface-canvas)] h-[300vh] md:h-[380vh] border-b border-[var(--border-subtle)]"
     >
