@@ -52,9 +52,9 @@ export default function Header({ onOpenBooking }) {
 
           <button
             onClick={() => onOpenBooking()}
-            className="px-4 py-2 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.98] rounded-lg transition-all cursor-pointer shadow-sm"
+            className="mayfly-btn px-5 h-9 text-xs"
           >
-            Book Free Inspection
+            <span className="btn-txt">Book Free Inspection</span>
           </button>
         </div>
 

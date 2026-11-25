@@ -455,13 +455,15 @@ export default function Hero({ onOpenBooking }) {
                     />
                   </div>
 
-                  {/* High-Converting Clear CTA Button */}
+                  {/* High-Converting Clear CTA Button (tall-mayfly-60 style) */}
                   <div className="md:col-span-3">
                     <button
                       type="submit"
-                      className="w-full h-11 px-5 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.99] rounded-lg transition-[transform,background-color] cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
+                      className="mayfly-btn w-full h-11 px-5 text-sm"
                     >
-                      <span>Get Instant Quote</span>
+                      <span className="btn-txt flex items-center justify-center gap-1.5">
+                        <span>Get Instant Quote</span>
+                      </span>
                     </button>
                   </div>
                 </form>

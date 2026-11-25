@@ -59,37 +59,41 @@ export default function ServicesHub({ onSelectService }) {
           ))}
         </div>
 
-        {/* Structured Service Cards Grid */}
+        {/* Structured Service Cards Grid (Styled with spicy-rat-83 interactive hover) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-4">
           {filteredServices.map((service) => (
             <div
               key={service.id}
-              className="bg-white border border-[#e5e3dc] rounded-2xl p-6 flex flex-col justify-between hover:border-[#121316] transition-all hover:shadow-lg group"
+              className="spicy-card p-6 flex flex-col justify-between group"
             >
-              <div>
+              {/* Rotating Animated spicy-rat-83 Border */}
+              <div className="spicy-border" aria-hidden="true" />
+              <span className="spicy-bottom-text" aria-hidden="true">Verified Service</span>
+
+              <div className="relative z-10">
                 {/* Card Top: Icon & Timing */}
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[#f6f5f0] flex items-center justify-center border border-[#e5e3dc]">
+                  <div className="w-10 h-10 rounded-xl bg-[var(--surface-muted)] flex items-center justify-center border border-[var(--border-subtle)]">
                     {getCategoryIcon(service.category)}
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[#121316] bg-[#ccff00]/25 px-2.5 py-0.5 rounded">
-                    <Clock className="w-3 h-3" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-mono font-medium text-[var(--ink-primary)] bg-[var(--surface-muted)] border border-[var(--border-subtle)] px-2.5 py-0.5 rounded-full">
+                    <Clock className="w-3 h-3 text-[var(--accent-primary)]" />
                     {service.time}
                   </span>
                 </div>
 
                 {/* Service Name & Description */}
-                <h3 className="text-lg font-bold text-[#121316] mb-2 font-display group-hover:text-blue-700 transition-colors">
+                <h3 className="text-lg font-semibold text-[var(--ink-primary)] mb-2 group-hover:text-[var(--accent-primary)] transition-colors">
                   {service.name}
                 </h3>
-                <p className="text-xs text-[#787c87] leading-relaxed mb-4">
+                <p className="text-xs text-[var(--ink-secondary)] leading-relaxed mb-4">
                   {service.description}
                 </p>
 
                 {/* Features List */}
                 <ul className="space-y-1.5 mb-6">
                   {service.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs text-[#4a4d56]">
+                    <li key={idx} className="flex items-start gap-2 text-xs text-[var(--ink-secondary)]">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 mt-0.5 shrink-0" />
                       <span>{feat}</span>
                     </li>
@@ -98,10 +102,10 @@ export default function ServicesHub({ onSelectService }) {
               </div>
 
               {/* Card Footer: Starting Price & CTAs */}
-              <div className="pt-4 border-t border-[#f0eee6]">
+              <div className="pt-4 border-t border-[var(--border-subtle)] relative z-10">
                 <div className="flex items-baseline justify-between mb-3">
-                  <span className="text-[11px] font-mono text-[#787c87]">Starting Rate</span>
-                  <span className="text-xl font-extrabold text-[#121316] font-display">
+                  <span className="text-[11px] font-medium text-[var(--ink-muted)]">Starting Rate</span>
+                  <span className="text-xl font-bold text-[var(--ink-primary)]">
                     {service.price}
                   </span>
                 </div>
@@ -109,7 +113,7 @@ export default function ServicesHub({ onSelectService }) {
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     onClick={() => onSelectService(service)}
-                    className="w-full py-2 px-3 text-xs font-mono font-bold uppercase text-white bg-[#121316] hover:bg-black rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer"
+                    className="w-full py-2 px-3 text-xs font-medium rounded-lg text-white bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] transition-colors flex items-center justify-center gap-1 cursor-pointer shadow-sm"
                   >
                     <span>Book</span>
                     <ArrowRight className="w-3 h-3" />
@@ -119,9 +123,9 @@ export default function ServicesHub({ onSelectService }) {
                     href={`https://wa.me/919157691572?text=${encodeURIComponent(`Hello Home Hancer, I want to inquire about ${service.name} (Starting ${service.price}) in Ahmedabad.`)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full py-2 px-3 text-xs font-mono font-bold uppercase text-[#121316] bg-[#ccff00] hover:bg-[#b8e600] rounded-lg transition-colors flex items-center justify-center gap-1"
+                    className="w-full py-2 px-3 text-xs font-medium text-[var(--ink-primary)] bg-[var(--surface-muted)] hover:bg-[var(--border-subtle)] border border-[var(--border-subtle)] rounded-lg transition-colors flex items-center justify-center gap-1"
                   >
-                    <MessageCircle className="w-3 h-3 fill-current" />
+                    <MessageCircle className="w-3 h-3 text-emerald-600 fill-emerald-600/20" />
                     <span>WhatsApp</span>
                   </a>
                 </div>
