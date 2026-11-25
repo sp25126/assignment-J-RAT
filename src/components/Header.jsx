@@ -78,7 +78,7 @@ export default function Header({ onOpenBooking }) {
         <div className="md:hidden border-t border-[var(--border-subtle)] bg-[var(--surface-card)] px-4 py-4 space-y-3">
           <nav className="flex flex-col space-y-2 text-sm font-medium text-[var(--ink-secondary)]">
             <a
-              href="#services-3d"
+              href="#services-section"
               onClick={() => setMobileMenuOpen(false)}
               className="py-2 hover:text-[var(--ink-primary)]"
             >

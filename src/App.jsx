@@ -26,7 +26,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#f6f5f0] text-[#121316]">
+    <div className="min-h-screen flex flex-col bg-[var(--surface-canvas)] text-[var(--ink-primary)] overflow-x-clip">
       {/* 1. Header with exact brand and location */}
       <Header
         onOpenBooking={() => handleOpenBooking()}

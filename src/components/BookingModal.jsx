@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, CheckCircle2, MessageCircle, ArrowRight, ShieldCheck } from 'lucide-react';
+import { X, CheckCircle2, MessageCircle, ArrowRight, ShieldCheck, MapPin, Wrench } from 'lucide-react';
 import { POPULAR_SERVICES, AHMEDABAD_AREAS } from '../data/servicesData';
 
 export default function BookingModal({ isOpen, onClose, preselectedService, area }) {
@@ -32,145 +32,161 @@ export default function BookingModal({ isOpen, onClose, preselectedService, area
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
-      <div className="bg-[#121316] border border-white/20 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl text-[#f6f5f0]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-[var(--surface-card)] border border-[var(--border-subtle)] rounded-2xl w-full max-w-lg max-h-[92dvh] flex flex-col overflow-hidden shadow-2xl text-[var(--ink-primary)]">
+        
         {/* Header */}
-        <div className="p-5 border-b border-white/10 flex items-center justify-between bg-[#1a1c21]">
-          <div>
-            <h3 className="text-lg font-bold text-white font-display">Schedule Technician Visit</h3>
+        <div className="p-4 sm:p-5 border-b border-[var(--border-subtle)] flex items-center justify-between bg-[var(--surface-muted)]/50 shrink-0">
+          <div className="flex items-center gap-2">
+            <Wrench className="w-4 h-4 text-[var(--accent-primary)] shrink-0" />
+            <h3 className="text-base sm:text-lg font-bold text-[var(--ink-primary)]">
+              Schedule Technician Visit
+            </h3>
           </div>
           <button
+            type="button"
             onClick={onClose}
-            className="p-1.5 text-white/60 hover:text-white rounded-lg hover:bg-white/10"
+            className="p-1.5 text-[var(--ink-muted)] hover:text-[var(--ink-primary)] rounded-lg hover:bg-[var(--surface-muted)] transition-colors cursor-pointer"
+            aria-label="Close modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        {submitted ? (
-          <div className="p-8 text-center space-y-4">
-            <div className="w-12 h-12 bg-[#ccff00]/15 text-[#ccff00] rounded-full flex items-center justify-center mx-auto border border-[#ccff00]/30">
-              <CheckCircle2 className="w-6 h-6" />
-            </div>
-            <h4 className="text-xl font-bold text-white font-display">Booking Dispatched</h4>
-            <p className="text-xs text-[#a0a4b0] leading-relaxed">
-              Our Ahmedabad coordinator is assigning a vetted technician for <span className="text-white font-semibold">{selectedArea}</span>. You will receive a confirmation call at <span className="text-[#ccff00] font-mono">{phone}</span> shortly.
-            </p>
-            <div className="pt-2 flex flex-col gap-2">
-              <button
-                onClick={handleWhatsApp}
-                className="w-full py-2.5 px-4 bg-[#ccff00] hover:bg-[#b8e600] text-[#121316] font-mono font-bold text-xs uppercase rounded-lg flex items-center justify-center gap-2"
-              >
-                <MessageCircle className="w-4 h-4 fill-current" />
-                Track on WhatsApp
-              </button>
-              <button
-                onClick={onClose}
-                className="text-xs text-white/50 hover:text-white underline mt-1 font-mono"
-              >
-                Close Window
-              </button>
-            </div>
-          </div>
-        ) : (
-          <form onSubmit={handleSubmit} className="p-6 space-y-4">
-            <div>
-              <label className="block text-xs font-mono font-bold text-[#a0a4b0] mb-1 uppercase">
-                Service Category & Tariff
-              </label>
-              <select
-                value={selectedServiceId}
-                onChange={(e) => setSelectedServiceId(e.target.value)}
-                className="w-full bg-[#1a1c21] border border-white/10 rounded-xl p-2.5 text-xs text-white font-medium focus:border-[#ccff00] focus:outline-none"
-              >
-                {POPULAR_SERVICES.map((s) => (
-                  <option key={s.id} value={s.id}>
-                    {s.name} — {s.price}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono font-bold text-[#a0a4b0] mb-1 uppercase">
-                Ahmedabad Locality
-              </label>
-              <select
-                value={selectedArea}
-                onChange={(e) => setSelectedArea(e.target.value)}
-                className="w-full bg-[#1a1c21] border border-white/10 rounded-xl p-2.5 text-xs text-white font-medium focus:border-[#ccff00] focus:outline-none"
-              >
-                {AHMEDABAD_AREAS.map((a) => (
-                  <option key={a} value={a}>
-                    {a}, Ahmedabad
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-mono font-bold text-[#a0a4b0] mb-1 uppercase">
-                Mobile Number (10 digits)
-              </label>
-              <div className="flex">
-                <span className="inline-flex items-center px-3 text-xs font-mono text-white/70 bg-[#1a1c21] border border-r-0 border-white/10 rounded-l-xl">
-                  +91
-                </span>
-                <input
-                  type="tel"
-                  placeholder="Enter 10-digit number"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
-                  className="w-full bg-[#1a1c21] border border-white/10 rounded-r-xl p-2.5 text-xs text-white font-mono focus:border-[#ccff00] focus:outline-none"
-                  required
-                />
+        {/* Scrollable Modal Body */}
+        <div className="overflow-y-auto p-5 sm:p-6 flex-1">
+          {submitted ? (
+            <div className="text-center space-y-4 py-4">
+              <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto border border-emerald-200">
+                <CheckCircle2 className="w-6 h-6" />
+              </div>
+              <h4 className="text-lg sm:text-xl font-bold text-[var(--ink-primary)]">
+                Booking Request Dispatched
+              </h4>
+              <p className="text-xs sm:text-sm text-[var(--ink-secondary)] leading-relaxed max-w-sm mx-auto">
+                Our Ahmedabad desk is assigning a certified technician for <span className="font-semibold text-[var(--ink-primary)]">{selectedArea}</span>. You will receive a confirmation call at <span className="font-mono font-semibold text-[var(--accent-primary)]">+91 {phone}</span> shortly.
+              </p>
+              
+              <div className="pt-3 flex flex-col gap-2.5 max-w-sm mx-auto">
+                <button
+                  type="button"
+                  onClick={handleWhatsApp}
+                  className="w-full h-11 px-4 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Open WhatsApp to Track</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="text-xs text-[var(--ink-muted)] hover:text-[var(--ink-primary)] py-2 transition-colors cursor-pointer"
+                >
+                  Close Window
+                </button>
               </div>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-xs font-semibold text-[var(--ink-primary)] mb-1.5">
+                  Select Service & Starting Tariff
+                </label>
+                <select
+                  value={selectedServiceId}
+                  onChange={(e) => setSelectedServiceId(e.target.value)}
+                  className="w-full bg-[var(--surface-canvas)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-xl p-2.5 text-xs text-[var(--ink-primary)] font-medium focus:outline-none transition-colors"
+                >
+                  {POPULAR_SERVICES.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.name} — {s.price} ({s.time})
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div>
-              <label className="block text-xs font-mono font-bold text-[#a0a4b0] mb-1 uppercase">
-                Specific Issue Notes (Optional)
-              </label>
-              <textarea
-                placeholder="E.g., kitchen sink pipe leakage under counter, water pressure drop..."
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                rows={2}
-                className="w-full bg-[#1a1c21] border border-white/10 rounded-xl p-2.5 text-xs text-white focus:border-[#ccff00] focus:outline-none"
-              />
-            </div>
+              <div>
+                <label className="block text-xs font-semibold text-[var(--ink-primary)] mb-1.5">
+                  Ahmedabad Locality
+                </label>
+                <select
+                  value={selectedArea}
+                  onChange={(e) => setSelectedArea(e.target.value)}
+                  className="w-full bg-[var(--surface-canvas)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-xl p-2.5 text-xs text-[var(--ink-primary)] font-medium focus:outline-none transition-colors"
+                >
+                  {AHMEDABAD_AREAS.map((a) => (
+                    <option key={a} value={a}>
+                      {a}, Ahmedabad
+                    </option>
+                  ))}
+                </select>
+              </div>
 
-            <div className="pt-2 space-y-2">
-              <button
-                type="submit"
-                className="w-full py-3 bg-[#ccff00] hover:bg-[#b8e600] text-[#121316] font-mono font-bold text-xs uppercase rounded-xl flex items-center justify-center gap-2 shadow-sm cursor-pointer"
-              >
-                <span>Confirm Dispatch Request</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <div>
+                <label className="block text-xs font-semibold text-[var(--ink-primary)] mb-1.5">
+                  Mobile Number (10 digits)
+                </label>
+                <div className="flex">
+                  <span className="inline-flex items-center px-3 text-xs font-mono text-[var(--ink-muted)] bg-[var(--surface-muted)] border border-r-0 border-[var(--border-subtle)] rounded-l-xl select-none">
+                    +91
+                  </span>
+                  <input
+                    type="tel"
+                    inputMode="numeric"
+                    placeholder="Enter mobile number"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    className="w-full bg-[var(--surface-canvas)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-r-xl p-2.5 text-xs text-[var(--ink-primary)] tabular-nums focus:outline-none transition-colors"
+                    required
+                  />
+                </div>
+              </div>
 
-              <button
-                type="button"
-                onClick={handleWhatsApp}
-                className="w-full py-2.5 bg-white/5 hover:bg-white/10 text-white font-mono text-xs uppercase rounded-xl flex items-center justify-center gap-2 border border-white/10"
-              >
-                <MessageCircle className="w-4 h-4 text-[#ccff00] fill-current" />
-                <span>Book Direct via WhatsApp</span>
-              </button>
-            </div>
+              <div>
+                <label className="block text-xs font-semibold text-[var(--ink-primary)] mb-1.5">
+                  Specific Issue Notes (Optional)
+                </label>
+                <textarea
+                  placeholder="E.g., bathroom pipe leaking behind wall, AC jet wash required..."
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  rows={2}
+                  className="w-full bg-[var(--surface-canvas)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] rounded-xl p-2.5 text-xs text-[var(--ink-primary)] focus:outline-none transition-colors resize-none"
+                />
+              </div>
 
-            <div className="flex items-center justify-between text-[10px] font-mono text-[#a0a4b0] pt-2 border-t border-white/10">
-              <span className="flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-[#ccff00]" />
-                30-Day Warranty
-              </span>
-              <span>•</span>
-              <span>Fixed Rate Guarantee</span>
-              <span>•</span>
-              <span>Pay After Work</span>
-            </div>
-          </form>
-        )}
+              <div className="pt-2 space-y-2">
+                <button
+                  type="submit"
+                  className="w-full h-11 bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.98] text-white font-semibold text-xs rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer"
+                >
+                  <span>Confirm Dispatch Request</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleWhatsApp}
+                  className="w-full h-11 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 active:scale-[0.98] font-semibold text-xs rounded-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-600" />
+                  <span>Book Direct on WhatsApp</span>
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between text-[11px] text-[var(--ink-muted)] pt-3 border-t border-[var(--border-subtle)]">
+                <span className="flex items-center gap-1 font-medium text-emerald-700">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  30-Day Guarantee
+                </span>
+                <span>•</span>
+                <span>Fixed Rate Tariff</span>
+                <span>•</span>
+                <span>Pay After Service</span>
+              </div>
+            </form>
+          )}
+        </div>
+
       </div>
     </div>
   );

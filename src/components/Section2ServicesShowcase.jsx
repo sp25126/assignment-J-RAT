@@ -190,6 +190,7 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
                       alt={project.title}
                       className="w-full h-full object-cover object-center"
                       loading={idx === 0 ? 'eager' : 'lazy'}
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none lg:hidden" />
                   </div>

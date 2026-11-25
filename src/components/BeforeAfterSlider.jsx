@@ -161,6 +161,8 @@ export default function BeforeAfterSlider({ onOpenBooking }) {
                 alt={`After ${activeProject.title}`}
                 className="absolute inset-0 w-full h-full object-cover"
                 draggable={false}
+                loading="lazy"
+                decoding="async"
               />
 
               {/* After Floating Badge */}
@@ -186,6 +188,8 @@ export default function BeforeAfterSlider({ onOpenBooking }) {
                     alt={`Before ${activeProject.title}`}
                     className="w-full h-full object-cover filter contrast-[1.05] brightness-90"
                     draggable={false}
+                    loading="lazy"
+                    decoding="async"
                   />
                 </div>
 
