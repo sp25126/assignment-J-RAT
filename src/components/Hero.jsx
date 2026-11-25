@@ -469,18 +469,11 @@ export default function Hero({ onOpenBooking }) {
                 </form>
               )}
 
-              {/* Contact Details & Operating Hours - Clean, Tasteful Trust Row */}
-              <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
-                <a
-                  href="tel:9157691572"
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--surface-card)]/80 hover:bg-[var(--surface-card)] backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-primary)] font-medium tabular-nums transition-all hover:border-[var(--border-strong)] shadow-[0_1px_3px_rgba(15,23,42,0.03)]"
-                >
-                  <Phone className="w-3.5 h-3.5 text-[var(--accent-primary)]" strokeWidth={1.75} />
-                  <span>9157691572</span>
-                </a>
-                <span className="hidden sm:inline text-[var(--border-strong)]" aria-hidden="true">•</span>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--surface-card)]/80 backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-secondary)] shadow-[0_1px_3px_rgba(15,23,42,0.03)]">
+              {/* Operating Hours & Availability Trust Row */}
+              <div className="mt-3.5 flex items-center justify-center text-xs sm:text-sm">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-card)]/80 backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-secondary)] shadow-[0_1px_3px_rgba(15,23,42,0.03)]">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+                  <span className="font-medium text-[var(--ink-primary)]">Operating Hours:</span>
                   <span>Monday to Saturday, 9am to 8pm</span>
                 </div>
               </div>
