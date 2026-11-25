@@ -504,29 +504,9 @@ export default function Hero({ onOpenBooking }) {
             </div>
           </div>
 
-          {/* Bottom Stage Switcher Dock & Room Info */}
-          <div className="pointer-events-auto w-full max-w-4xl mx-auto pb-2 sm:pb-4">
-            {isIntroVisible ? (
-              <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto p-1.5 rounded-2xl bg-[var(--surface-card)]/90 backdrop-blur-md border border-[var(--border-subtle)] shadow-md mx-auto w-fit max-w-full">
-                {STAGES.map((stg, idx) => {
-                  const isActive = activeStageIdx === idx;
-                  return (
-                    <button
-                      key={stg.id}
-                      type="button"
-                      onClick={() => jumpToStage(idx)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
-                        isActive
-                          ? 'bg-[var(--accent-primary)] text-white font-semibold shadow-xs'
-                          : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-muted)]'
-                      }`}
-                    >
-                      <span>{stg.label}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            ) : (
+          {/* Scrubbed Stage Detail Card (Appears only when user scrolls into villa rooms) */}
+          {!isIntroVisible && (
+            <div className="pointer-events-auto w-full max-w-4xl mx-auto pb-2 sm:pb-4">
               <div className="bg-[var(--surface-card)]/95 backdrop-blur-md border border-[var(--border-subtle)] rounded-2xl p-4 sm:px-6 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
                 <div className="text-center sm:text-left space-y-1">
                   <h3 className="text-base sm:text-lg font-bold text-[var(--ink-primary)]">
@@ -557,8 +537,8 @@ export default function Hero({ onOpenBooking }) {
                   </button>
                 </div>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
         </div>
       </div>
