@@ -1,73 +1,99 @@
-# Home Hancer Services — Revamped Landing Page
+# Home Hancer Services — Production Web Application
 
-> Top 1% UI/UX redesign & engineering overhaul for **[Home Hancer Services Pvt Ltd](https://home-hancer-services.grexa.site/)** (Vejalpur, Ahmedabad).
-
----
-
-## 🚀 Design Architecture & References
-
-This redesign completely revamps the previous low-converting directory template into an engineered, high-trust property care and turnkey renovation platform.
-
-### 1. Visual Hierarchy & Aesthetic Synthesis
-* **Primary Reference:** [Halden Roofing Company Website Design (Dribbble)](https://dribbble.com/shots/27810240-Halden-Roofing-Company-Website-Design)  
-  * Industrial asphalt ink (`#121316`) and warm felt paper canvas (`#F6F5F0`).
-  * High-visibility **Safety Lime (`#CCFF00`)** action triggers and telemetry badges.
-  * Structured architectural cards with hairline borders.
-* **Typographic Synthesis:** [Savee Modernist Typography](https://savee.com/i/SiZ8c0e/) combined with `Plus Jakarta Sans` and `Space Grotesk` tabular figures.
-  * Architectural letter-spacing, disciplined uppercase telemetry (`AHMEDABAD // 23.0225° N, 72.5714° E`), and tight display tracking (`-0.03em`).
-
-### 2. Hallmark & Unslop Design System
-* **Hallmark Floor:**
-  * Strict `:root` design token architecture (no literal colors in CSS).
-  * `overflow-x: clip` on `html` and `body`.
-  * No gratuitous gradients, no emoji icons, zero cards inside cards.
-  * Immediate `:focus-visible` accessibility and `prefers-reduced-motion` compliance.
-* **Unslop Discipline:**
-  * Honest, verifiable facts: 4.8★ Google rating across 353+ reviews, real Ahmedabad customer testimonials (Akib Mansuri, Rohan Yadav, Arman Ali).
-  * Upfront transparent pricing (Tap repair from ₹149, AC jet wash from ₹499).
-  * Quiet chrome, high-contrast text roles, and 4px baseline grid.
-
-### 3. Hairline 3D Motion Design
-* An interactive isometric line engine (`HairlineHeroMotion.jsx`) that mathematically projects a 3-tier maintenance cross-section (Roof HVAC, Concealed Plumbing, and Electrical Entry).
-* Dynamically answers pointer coordinates with spring inertia and highlights active maintenance zones.
-
-### 4. Blender 5.2 3D Component
-* Custom 3D isometric architectural model (`/public/assets/3d-house-craft.png`) modeled and rendered via **Blender 5.2.3 LTS** with transparent alpha background.
-
-### 5. 3 Stitch AI Design Explorations
-Generated via **Google Stitch MCP** in project `11234665639785892338`:
-1. **Screen 1:** *Modern Tech-Utility & Instant Booking Engine* (`48b39bf4b4a9444c8a3150787cdc043e`)
-2. **Screen 2:** *Architectural Luxury & Turnkey Renovation* (`722026cf2c964a49a6b4669564b687d9`)
-3. **Screen 3:** *3D Isometric Command Hub & Radar Dispatch* (`2eeea9bbeaeb486f9179fd5c8a6ae095`)
+> High-performance, SEO-optimized property maintenance & turnkey architectural renovation platform for **Home Hancer Services Pvt Ltd** (Vejalpur, Ahmedabad).
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗️ Project Architecture
 
-* **Framework:** React 19 + Vite 6
-* **Styling:** Tailwind CSS v4 + `@tailwindcss/vite`
-* **Icons:** Lucide React (16-18px, 1.5 stroke)
-* **3D & Motion:** Hairline Canvas Engine + Blender 5.2 Render Pipeline
-* **Code Quality:** ESLint 9 + strict semantic HTML5
-
----
-
-## 🏃 Getting Started
-
-```bash
-# 1. Install dependencies
-npm install
-
-# 2. Run local development server
-npm run dev
-
-# 3. Build production bundle
-npm run build
+```
+assignment-J-RAT/
+├── index.html                  # Semantic HTML5, Meta SEO, Geo-tags, Schema.org JSON-LD
+├── package.json                # Lean dependencies (React 19, Vite 6, Tailwind v4)
+├── vite.config.js              # Rollup manual chunk splitting & esbuild optimization
+├── eslint.config.js            # Code quality and React standards
+├── README.md                   # Engineering documentation
+├── public/
+│   ├── assets/                 # Flow 24fps scrubbed 3D villa architectural frames
+│   └── gallery/                # Verified on-site Ahmedabad project photography
+└── src/
+    ├── main.jsx                # Application root mount
+    ├── App.jsx                 # Master page orchestration & modal state
+    ├── index.css               # Hallmark design tokens, typography, and card transitions
+    ├── components/             # Active production component system (10 core modules)
+    │   ├── Header.jsx                  # Sticky navbar, smooth offset scroll & scroll-spy
+    │   ├── Hero.jsx                    # 24fps scrubbed exploded villa & smart enquiry engine
+    │   ├── Section2ServicesShowcase.jsx# Autoplay site proof carousel & catalog search
+    │   ├── HairlineCardBackdrop.jsx    # Category-specific isometric hairline line drawings
+    │   ├── BeforeAfterSlider.jsx       # Interactive tactile master bathroom renovation slider
+    │   ├── ReviewsSection.jsx          # Google Business 4.9★ reviews & verified trust metrics
+    │   ├── PreFooterCTA.jsx            # High-conversion pre-footer call-to-action
+    │   ├── Footer.jsx                  # Structured company details, legal & verified office HQ
+    │   ├── BookingModal.jsx            # Mobile-responsive technician dispatch modal
+    │   └── MobileStickyBar.jsx         # Bottom action dock with iOS/Android safe area support
+    └── data/                   # Structured domain datasets
+        ├── galleryData.js              # Real site photography catalog & captions
+        ├── servicesData.js             # Transparent service tariffs & Ahmedabad zones
+        └── transformationsData.js      # Flagship renovation case study data
 ```
 
 ---
 
-## 📍 Business Information (Ahmedabad)
-* **HQ:** C-901 PNTC, Times Of India Press Road behind Titanium City Centre, Vejalpur, Ahmedabad, Gujarat, 380015
-* **Hotline:** +91 91576 91572
-* **Hours:** Monday – Saturday: 9:00 AM – 8:00 PM (Emergency 24/7 Hotline)
+## 🎨 Design System & Craft Philosophy
+
+### 1. Hallmark & Unslop Standards
+* **Restrained Palette:** Slate and cool stone canvas (`#f8fafc`), quiet chrome surfaces, and a single high-contrast cobalt accent (`#1d4ed8`). Zero gratuitous neon washes, slop gradients, or emoji clutter.
+* **Typographic Rigor:** Standardized on `Plus Jakarta Sans` with tabular numeric figures for pricing and telemetry. Sentence case labels with strict 4px baseline rhythm.
+* **Tactile Interactions:** Crisp button states with smooth cubic-bezier transitions (`0.2, 0.8, 0.2, 1`), active press scales (`0.98`), and high-elevation shadow cues.
+
+### 2. Category-Specific Isometric Hairline Engine (`HairlineCardBackdrop.jsx`)
+Minimal single-stroke architectural line drawings inspired by `@lucasmarkes/hairline` that dynamically answer cursor coordinates with spring inertia:
+* **AC & Cooling (`ac`):** Split indoor unit with horizontal louvre vents and faint dynamic airflow streamlines.
+* **Carpentry & Woodwork (`carpentry`):** Isometric modern armchair with cushioned seat slab and tapered legs.
+* **Plumbing (`plumbing`):** Water pipe manifold with 90° bibcock tap, turn-valve handle, and falling water droplet.
+* **Electrical (`electrical`):** Modular switchboard faceplate with dual rocker switches and MCB breaker lever.
+* **Painting & Waterproofing (`painting`):** Paint roller drum with angled frame and wall texture swatch.
+* **Renovation (`renovation`):** Freestanding oval bathtub with contoured rim and swan-neck mixer faucet.
+
+---
+
+## ⚡ Speed & SEO Optimizations
+
+1. **Vite Manual Chunk Splitting:**
+   * `vendor-react`: `react`, `react-dom`
+   * `vendor-icons`: `lucide-react`
+   * Enables parallel asset fetching, zero render-blocking warnings, and maximum HTTP cache efficiency.
+2. **Local SEO Geo-Targeting:**
+   * Exact GPS coordinates (`23.0039° N, 72.5278° E`) and `geo.region` (`IN-GJ`) for Ahmedabad search authority.
+3. **Google Rich Snippets (Schema.org JSON-LD):**
+   * Registered `HomeAndConstructionBusiness` schema including address, operating hours, phone, service areas across 11 Ahmedabad zones, and verified 4.9★ aggregate rating.
+4. **Mobile Responsiveness:**
+   * Universal `overflow-x: clip` preventing mobile horizontal shifts.
+   * Mobile sticky bottom dock with safe-area inset padding (`env(safe-area-inset-bottom)`).
+   * Upward-flowing dropdown popovers preventing mobile viewport clipping.
+
+---
+
+## 🛠️ Development & Production
+
+```bash
+# Install dependencies
+npm install
+
+# Start local development server
+npm run dev
+
+# Compile optimized production build
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+---
+
+## 📍 Business Information
+* **Entity:** Home Hancer Services Pvt Ltd
+* **Operational HQ:** C-901 PNTC, Times Of India Press Road behind Titanium City Centre, Vejalpur, Ahmedabad, Gujarat 380015
+* **Contact Desk:** +91 91576 91572
+* **Operating Hours:** Monday – Saturday: 09:00 AM – 08:00 PM (Emergency Desk Available)
