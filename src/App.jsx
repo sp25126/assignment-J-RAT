@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import InteractiveHouseServices from './components/InteractiveHouseServices';
+import ThreeDHouseExperience from './components/ThreeDHouseExperience';
 import ServicesHub from './components/ServicesHub';
 import BeforeAfterSlider from './components/BeforeAfterSlider';
-import PricingPackages from './components/PricingPackages';
-import WhyChooseUs from './components/WhyChooseUs';
 import ReviewsSection from './components/ReviewsSection';
-import FAQSection from './components/FAQSection';
+import PreFooterCTA from './components/PreFooterCTA';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
 import MobileStickyBar from './components/MobileStickyBar';
@@ -30,7 +28,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f6f5f0] text-[#121316]">
-      {/* 1. Hallmark & Halden Header */}
+      {/* 1. Header with exact brand and location */}
       <Header
         onOpenBooking={() => handleOpenBooking()}
         selectedArea={selectedArea}
@@ -40,48 +38,42 @@ export default function App() {
 
       {/* Main Landing Page Flow */}
       <main className="flex-1">
-        {/* 2. Hero with Savee Typography, Hairline 3D Motion & Estimator */}
+        {/* 2. Hero: Exact Original Words from Before State + "At a glance" card */}
         <Hero
           onOpenBooking={() => handleOpenBooking()}
           selectedArea={selectedArea}
           onBookSuccess={(details) => handleOpenBooking({ name: details.service })}
         />
 
-        {/* 3. Interactive 3D Villa Cross-Section with Room Zoom & Scrollytelling */}
-        <InteractiveHouseServices
+        {/* 3. True 3D House Cross-Section Experience with WebGL Camera Zoom */}
+        <ThreeDHouseExperience
           onOpenBooking={(service) => handleOpenBooking(service)}
         />
 
-        {/* 4. Complete Service Catalog & Filterable Grid */}
+        {/* 4. Complete Services Catalog */}
         <ServicesHub
           onSelectService={(service) => handleOpenBooking(service)}
         />
 
-        {/* 5. Interactive Before & After Craftsmanship Slider */}
+        {/* 5. Before vs. After Craftsmanship Slider */}
         <BeforeAfterSlider />
 
-        {/* 6. Fixed Rate Card & Tariff Comparison */}
-        <PricingPackages
-          onOpenBooking={(title) => handleOpenBooking({ name: title })}
-        />
-
-        {/* 7. Why Home Hancer Standard Comparison */}
-        <WhyChooseUs />
-
-        {/* 8. Real Ahmedabad Google Reviews */}
+        {/* 6. Google Reviews: Exact Original Reviews */}
         <ReviewsSection />
 
-        {/* 9. Concise FAQ Accordion */}
-        <FAQSection />
+        {/* 7. Pre-Footer Banner: "Your next step starts here." */}
+        <PreFooterCTA
+          onOpenBooking={() => handleOpenBooking()}
+        />
       </main>
 
-      {/* 10. Comprehensive Footer */}
+      {/* 8. Comprehensive Footer with Exact Location & Hours */}
       <Footer onOpenBooking={() => handleOpenBooking()} />
 
-      {/* 11. Non-obstructive Mobile Sticky Action Bar */}
+      {/* 9. Mobile Sticky Action Bar */}
       <MobileStickyBar onOpenBooking={() => handleOpenBooking()} />
 
-      {/* 12. Booking Modal Drawer */}
+      {/* 10. Booking Modal */}
       <BookingModal
         isOpen={modalOpen}
         onClose={handleCloseBooking}
