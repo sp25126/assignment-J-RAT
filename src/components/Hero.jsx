@@ -132,28 +132,26 @@ export default function Hero({ onOpenBooking }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    const drawCoverImage = (img, alpha, zoom, panX, panY, w, h) => {
+    const drawContainImage = (img, alpha, zoom, panX, panY, w, h) => {
       if (!img || !img.complete || img.naturalWidth === 0) return;
       ctx.save();
       ctx.globalAlpha = alpha;
 
-      const imgRatio = img.naturalWidth / img.naturalHeight;
-      const canvasRatio = w / h;
+      const isMobile = w < 768;
+      const effectiveZoom = isMobile ? Math.min(zoom, 1.02) : zoom;
+      const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight) * effectiveZoom;
 
-      let drawW, drawH;
-      if (canvasRatio > imgRatio) {
-        drawW = w * zoom;
-        drawH = (w / imgRatio) * zoom;
-      } else {
-        drawH = h * zoom;
-        drawW = h * imgRatio * zoom;
-      }
+      const drawW = img.naturalWidth * scale;
+      const drawH = img.naturalHeight * scale;
 
       const dx = (w - drawW) / 2 + panX * w;
-      const dy = (h - drawH) / 2 + panY * h;
+      const dy = (h - drawH) / 2 + (isMobile ? panY * 0.5 : panY) * h;
       ctx.drawImage(img, dx, dy, drawW, drawH);
       ctx.restore();
     };
+
+    const easeInOutCubic = (t) =>
+      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
     let animId;
     let lastStage = 0;
@@ -190,7 +188,8 @@ export default function Hero({ onOpenBooking }) {
       let blend = 0;
       if (idx !== nextIdx) {
         const span = nextStage.startAt - currStage.startAt;
-        blend = span > 0 ? Math.min(Math.max((qProgress - currStage.startAt) / span, 0), 1) : 0;
+        const rawBlend = span > 0 ? Math.min(Math.max((qProgress - currStage.startAt) / span, 0), 1) : 0;
+        blend = easeInOutCubic(rawBlend);
       }
 
       const rect = canvas.getBoundingClientRect();
@@ -200,7 +199,7 @@ export default function Hero({ onOpenBooking }) {
       ctx.fillStyle = '#f8fafc';
       ctx.fillRect(0, 0, w, h);
 
-      // Draw current keyframe with subtle zoom/pan progression
+      // Draw current & next keyframes with contain framing so all technicians stay visible
       const currImg = imagesRef.current[idx];
       const nextImg = imagesRef.current[nextIdx];
 
@@ -209,10 +208,10 @@ export default function Hero({ onOpenBooking }) {
       const interpPanY = currStage.panY + (nextStage.panY - currStage.panY) * blend;
 
       if (currImg && currImg.complete && currImg.naturalWidth > 0) {
-        drawCoverImage(currImg, 1 - blend * 0.85, interpZoom, interpPanX, interpPanY, w, h);
+        drawContainImage(currImg, 1 - blend * 0.85, interpZoom, interpPanX, interpPanY, w, h);
       }
       if (blend > 0.01 && nextImg && nextImg.complete && nextImg.naturalWidth > 0) {
-        drawCoverImage(nextImg, blend, interpZoom, interpPanX, interpPanY, w, h);
+        drawContainImage(nextImg, blend, interpZoom, interpPanX, interpPanY, w, h);
       }
     };
 
@@ -246,7 +245,7 @@ export default function Hero({ onOpenBooking }) {
   return (
     <section
       ref={trackRef}
-      className="relative bg-[var(--surface-canvas)] h-[420vh] border-b border-[var(--border-subtle)]"
+      className="relative bg-[var(--surface-canvas)] h-[300vh] md:h-[380vh] border-b border-[var(--border-subtle)]"
     >
       {/* Sticky Full-Bleed Viewport */}
       <div className="sticky top-16 h-[calc(100dvh-4rem)] w-full overflow-hidden">
