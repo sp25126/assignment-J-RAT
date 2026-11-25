@@ -235,12 +235,10 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
                   <button
                     type="button"
                     onClick={() => onOpenBooking && onOpenBooking({ name: activeProject.title })}
-                    className="mayfly-btn w-full h-11 text-xs"
+                    className="w-full h-11 px-5 rounded-xl text-xs font-semibold text-white bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.98] shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer group"
                   >
-                    <span className="btn-txt flex items-center justify-center gap-1.5">
-                      <span>Book Service for This Trade</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </span>
+                    <span>Book Service for This Trade</span>
+                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
                   </button>
 
                   {/* Autoplay Micro Bar */}

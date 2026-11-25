@@ -33,19 +33,17 @@ export default function PreFooterCTA({ onOpenBooking }) {
               <button
                 type="button"
                 onClick={() => onOpenBooking && onOpenBooking()}
-                className="mayfly-btn w-full sm:w-auto px-8 h-12 text-sm shadow-lg shadow-blue-900/30"
+                className="w-full sm:w-auto px-8 h-12 rounded-xl text-sm font-semibold text-white bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.98] shadow-lg shadow-blue-950/50 transition-all flex items-center justify-center gap-2 cursor-pointer group"
               >
-                <span className="btn-txt flex items-center justify-center gap-2">
-                  <span>Schedule Free Inspection</span>
-                  <ArrowRight className="w-4 h-4" />
-                </span>
+                <span>Schedule Free Inspection</span>
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </button>
 
               <a
                 href="https://wa.me/919157691572?text=Hello%20Home%20Hancer%20Services%20Pvt%20Ltd,%20I%20am%20looking%20for%20property%20maintenance%20in%20Ahmedabad."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto px-6 h-12 rounded-full bg-white/10 hover:bg-white/15 text-white text-sm font-medium flex items-center justify-center gap-2 border border-white/20 transition-all cursor-pointer backdrop-blur-sm"
+                className="w-full sm:w-auto px-7 h-12 rounded-xl bg-white/10 hover:bg-white/15 active:scale-[0.98] text-white text-sm font-medium flex items-center justify-center gap-2 border border-white/20 hover:border-white/30 transition-all cursor-pointer backdrop-blur-sm"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
                 <span>Chat on WhatsApp</span>
