@@ -3,7 +3,9 @@ import React, { useRef, useEffect } from 'react';
 /**
  * HairlineCardBackdrop
  * Minimal, category-specific isometric line drawings inspired by @lucasmarkes/hairline.
- * Renders an authentic isometric architectural figure per trade:
+ * Positioned in the right corner directly above the price and action row.
+ *
+ * Distinct minimal hairline figure per trade:
  * - 'ac': Split AC unit with louvre vents & ambient airflow streams
  * - 'carpentry': Modern isometric armchair / sofa with tapered legs & cushions
  * - 'plumbing': Isometric pipe manifold, bibcock tap & water drop
@@ -13,13 +15,13 @@ import React, { useRef, useEffect } from 'react';
  *
  * Adheres strictly to Hairline principles:
  * - Minimal, quiet single-stroke geometry (no slop glows or heavy fills)
- * - Spring inertia tracking answering the pointer
+ * - Rest pose visible at low opacity; activates with spring inertia answering pointer on hover
  * - Dim crease inside, crisp silhouette outside
  */
 export default function HairlineCardBackdrop({ category }) {
   const canvasRef = useRef(null);
   const mouseRef = useRef({ x: 0.5, y: 0.5, active: false });
-  const currentRef = useRef({ x: 0.5, y: 0.5, opacity: 0 });
+  const currentRef = useRef({ x: 0.5, y: 0.5, opacity: 0.2 }); // Rest pose subtly visible
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -57,28 +59,29 @@ export default function HairlineCardBackdrop({ category }) {
     parent.addEventListener('mouseleave', handlePointerLeave);
     parent.addEventListener('mousemove', handlePointerMove);
 
-    // Dynamic animation loop with spring inertia
+    // Spring inertia animation loop
     const render = () => {
-      const targetOpacity = mouseRef.current.active ? 1 : 0;
-      currentRef.current.opacity += (targetOpacity - currentRef.current.opacity) * 0.14;
-      currentRef.current.x += (mouseRef.current.x - currentRef.current.x) * 0.16;
-      currentRef.current.y += (mouseRef.current.y - currentRef.current.y) * 0.16;
+      // Rest opacity ~0.2, Hover opacity ~0.65 (Hairline Rule 05: rest is designed)
+      const targetOpacity = mouseRef.current.active ? 0.65 : 0.2;
+      currentRef.current.opacity += (targetOpacity - currentRef.current.opacity) * 0.12;
+      currentRef.current.x += (mouseRef.current.x - currentRef.current.x) * 0.15;
+      currentRef.current.y += (mouseRef.current.y - currentRef.current.y) * 0.15;
 
       const w = parent.offsetWidth;
       const h = parent.offsetHeight;
 
       ctx.clearRect(0, 0, w, h);
 
-      if (currentRef.current.opacity > 0.008 && w > 0 && h > 0) {
+      if (w > 0 && h > 0) {
         ctx.save();
-        // Keep it restrained & minimal: quiet backdrop that doesn't compete with card copy
-        ctx.globalAlpha = currentRef.current.opacity * 0.38;
+        ctx.globalAlpha = currentRef.current.opacity;
 
-        // Origin anchor: positioned gracefully in the upper-right / center backdrop
-        const mx = (currentRef.current.x - 0.5) * 14;
-        const my = (currentRef.current.y - 0.5) * 12;
-        const ox = w * 0.72 + mx;
-        const oy = h * 0.32 + my;
+        // Position: In the right corner directly above the price
+        // Price sits on the right side ~h - 90px; this places figure ~h - 150px
+        const mx = (currentRef.current.x - 0.5) * 12;
+        const my = (currentRef.current.y - 0.5) * 10;
+        const ox = Math.max(w - 68, w * 0.72) + mx;
+        const oy = Math.max(h - 152, h * 0.62) + my;
 
         ctx.strokeStyle = '#2563eb'; // Cobalt hairline
         ctx.fillStyle = 'transparent';
@@ -98,9 +101,9 @@ export default function HairlineCardBackdrop({ category }) {
             // ==========================================
             // ISOMETRIC SPLIT AIR CONDITIONER UNIT
             // ==========================================
-            const length = 52;
-            const depth = 22;
-            const height = 24;
+            const length = 44;
+            const depth = 18;
+            const height = 20;
 
             // Chassis Top Rhombus
             ctx.beginPath();
@@ -111,7 +114,7 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.closePath();
             ctx.stroke();
 
-            // Front Face (facing viewer along Y axis)
+            // Front Face
             ctx.beginPath();
             ctx.moveTo(ox + isoX(length, 0), oy + isoY(length, 0, height));
             ctx.lineTo(ox + isoX(length, depth), oy + isoY(length, depth, height));
@@ -131,39 +134,39 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.strokeStyle = '#64748b'; // Dim crease inside
             ctx.lineWidth = 0.8;
             ctx.beginPath();
-            const ventZ1 = 4;
-            const ventZ2 = 9;
-            ctx.moveTo(ox + isoX(length, 3), oy + isoY(length, 3, ventZ1));
-            ctx.lineTo(ox + isoX(length, depth - 3), oy + isoY(length, depth - 3, ventZ1));
-            ctx.lineTo(ox + isoX(length, depth - 3), oy + isoY(length, depth - 3, ventZ2));
-            ctx.lineTo(ox + isoX(length, 3), oy + isoY(length, 3, ventZ2));
+            const ventZ1 = 3;
+            const ventZ2 = 7;
+            ctx.moveTo(ox + isoX(length, 2), oy + isoY(length, 2, ventZ1));
+            ctx.lineTo(ox + isoX(length, depth - 2), oy + isoY(length, depth - 2, ventZ1));
+            ctx.lineTo(ox + isoX(length, depth - 2), oy + isoY(length, depth - 2, ventZ2));
+            ctx.lineTo(ox + isoX(length, 2), oy + isoY(length, 2, ventZ2));
             ctx.closePath();
             ctx.stroke();
 
             // Digital Temp Display Accent Diamond
             ctx.beginPath();
-            const tx = ox + isoX(length, depth - 7);
-            const ty = oy + isoY(length, depth - 7, 16);
-            ctx.moveTo(tx, ty - 2.5);
-            ctx.lineTo(tx + 2.5, ty);
-            ctx.lineTo(tx, ty + 2.5);
-            ctx.lineTo(tx - 2.5, ty);
+            const tx = ox + isoX(length, depth - 5);
+            const ty = oy + isoY(length, depth - 5, 13);
+            ctx.moveTo(tx, ty - 2);
+            ctx.lineTo(tx + 2, ty);
+            ctx.lineTo(tx, ty + 2);
+            ctx.lineTo(tx - 2, ty);
             ctx.closePath();
             ctx.stroke();
 
-            // Gentle Airflow Streamlines
+            // Airflow Streamlines
             ctx.strokeStyle = '#38bdf8';
             ctx.lineWidth = 0.85;
-            const sway = (currentRef.current.x - 0.5) * 8;
+            const sway = (currentRef.current.x - 0.5) * 6;
             for (let i = 0; i < 3; i++) {
-              const startX = ox + isoX(length, 6 + i * 5);
-              const startY = oy + isoY(length, 6 + i * 5, 4);
+              const startX = ox + isoX(length, 4 + i * 4.5);
+              const startY = oy + isoY(length, 4 + i * 4.5, 3);
               ctx.beginPath();
               ctx.moveTo(startX, startY);
               ctx.bezierCurveTo(
-                startX + 14 + sway, startY + 12,
-                startX + 18 + sway, startY + 24,
-                startX + 26 + sway, startY + 36
+                startX + 10 + sway, startY + 8,
+                startX + 14 + sway, startY + 16,
+                startX + 20 + sway, startY + 24
               );
               ctx.stroke();
             }
@@ -174,10 +177,10 @@ export default function HairlineCardBackdrop({ category }) {
             // ==========================================
             // ISOMETRIC MODERN ARMCHAIR / SOFA
             // ==========================================
-            const seatW = 34;
-            const seatD = 32;
-            const seatH = 14;
-            const backH = 34;
+            const seatW = 28;
+            const seatD = 26;
+            const seatH = 12;
+            const backH = 26;
 
             // Seat Cushion (isometric slab)
             ctx.beginPath();
@@ -192,8 +195,8 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.beginPath();
             ctx.moveTo(ox + isoX(seatW, 0), oy + isoY(seatW, 0, seatH));
             ctx.lineTo(ox + isoX(seatW, seatD), oy + isoY(seatW, seatD, seatH));
-            ctx.lineTo(ox + isoX(seatW, seatD), oy + isoY(seatW, seatD, seatH - 5));
-            ctx.lineTo(ox + isoX(seatW, 0), oy + isoY(seatW, 0, seatH - 5));
+            ctx.lineTo(ox + isoX(seatW, seatD), oy + isoY(seatW, seatD, seatH - 4));
+            ctx.lineTo(ox + isoX(seatW, 0), oy + isoY(seatW, 0, seatH - 4));
             ctx.closePath();
             ctx.stroke();
 
@@ -201,42 +204,38 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.beginPath();
             ctx.moveTo(ox + isoX(0, 0), oy + isoY(0, 0, seatH));
             ctx.lineTo(ox + isoX(0, seatD), oy + isoY(0, seatD, seatH));
-            ctx.lineTo(ox + isoX(-4, seatD), oy + isoY(-4, seatD, seatH + backH));
-            ctx.lineTo(ox + isoX(-4, 0), oy + isoY(-4, 0, seatH + backH));
+            ctx.lineTo(ox + isoX(-3, seatD), oy + isoY(-3, seatD, seatH + backH));
+            ctx.lineTo(ox + isoX(-3, 0), oy + isoY(-3, 0, seatH + backH));
             ctx.closePath();
             ctx.stroke();
 
-            // Armrests (Left & Right)
+            // Armrests
             ctx.beginPath();
             // Left Armrest
             ctx.moveTo(ox + isoX(0, 0), oy + isoY(0, 0, seatH));
             ctx.lineTo(ox + isoX(seatW, 0), oy + isoY(seatW, 0, seatH));
-            ctx.lineTo(ox + isoX(seatW, 0), oy + isoY(seatW, 0, seatH + 10));
-            ctx.lineTo(ox + isoX(0, 0), oy + isoY(0, 0, seatH + 10));
+            ctx.lineTo(ox + isoX(seatW, 0), oy + isoY(seatW, 0, seatH + 8));
+            ctx.lineTo(ox + isoX(0, 0), oy + isoY(0, 0, seatH + 8));
             ctx.closePath();
             // Right Armrest
             ctx.moveTo(ox + isoX(0, seatD), oy + isoY(0, seatD, seatH));
             ctx.lineTo(ox + isoX(seatW, seatD), oy + isoY(seatW, seatD, seatH));
-            ctx.lineTo(ox + isoX(seatW, seatD), oy + isoY(seatW, seatD, seatH + 10));
-            ctx.lineTo(ox + isoX(0, seatD), oy + isoY(0, seatD, seatH + 10));
+            ctx.lineTo(ox + isoX(seatW, seatD), oy + isoY(seatW, seatD, seatH + 8));
+            ctx.lineTo(ox + isoX(0, seatD), oy + isoY(0, seatD, seatH + 8));
             ctx.closePath();
             ctx.stroke();
 
-            // 4 Slender Tapered Legs
+            // 4 Tapered Legs
             ctx.strokeStyle = '#64748b';
             ctx.lineWidth = 0.85;
             ctx.beginPath();
-            // Front-Left Leg
-            ctx.moveTo(ox + isoX(seatW - 2, 2), oy + isoY(seatW - 2, 2, seatH - 5));
+            ctx.moveTo(ox + isoX(seatW - 2, 2), oy + isoY(seatW - 2, 2, seatH - 4));
             ctx.lineTo(ox + isoX(seatW + 2, 0), oy + isoY(seatW + 2, 0, 0));
-            // Front-Right Leg
-            ctx.moveTo(ox + isoX(seatW - 2, seatD - 2), oy + isoY(seatW - 2, seatD - 2, seatH - 5));
+            ctx.moveTo(ox + isoX(seatW - 2, seatD - 2), oy + isoY(seatW - 2, seatD - 2, seatH - 4));
             ctx.lineTo(ox + isoX(seatW + 2, seatD), oy + isoY(seatW + 2, seatD, 0));
-            // Rear-Left Leg
-            ctx.moveTo(ox + isoX(2, 2), oy + isoY(2, 2, seatH - 5));
+            ctx.moveTo(ox + isoX(2, 2), oy + isoY(2, 2, seatH - 4));
             ctx.lineTo(ox + isoX(-2, 0), oy + isoY(-2, 0, 0));
-            // Rear-Right Leg
-            ctx.moveTo(ox + isoX(2, seatD - 2), oy + isoY(2, seatD - 2, seatH - 5));
+            ctx.moveTo(ox + isoX(2, seatD - 2), oy + isoY(2, seatD - 2, seatH - 4));
             ctx.lineTo(ox + isoX(-2, seatD), oy + isoY(-2, seatD, 0));
             ctx.stroke();
             break;
@@ -246,9 +245,9 @@ export default function HairlineCardBackdrop({ category }) {
             // ==========================================
             // ISOMETRIC WATER TAP & FAUCET VALVE
             // ==========================================
-            const pipeR = 4;
-            const pipeH = 36;
-            const spoutLen = 26;
+            const pipeR = 3.5;
+            const pipeH = 30;
+            const spoutLen = 22;
 
             // Vertical Supply Pipe
             ctx.beginPath();
@@ -260,26 +259,26 @@ export default function HairlineCardBackdrop({ category }) {
 
             // Faucet Body Tee & 90-deg Spout
             ctx.beginPath();
-            ctx.moveTo(ox + isoX(pipeR, 0), oy + isoY(pipeR, 0, pipeH - 4));
+            ctx.moveTo(ox + isoX(pipeR, 0), oy + isoY(pipeR, 0, pipeH - 3));
             ctx.bezierCurveTo(
-              ox + isoX(pipeR + 6, 0), oy + isoY(pipeR + 6, 0, pipeH - 2),
-              ox + isoX(spoutLen, 0), oy + isoY(spoutLen, 0, pipeH - 6),
-              ox + isoX(spoutLen, 0), oy + isoY(spoutLen, 0, pipeH - 14)
+              ox + isoX(pipeR + 5, 0), oy + isoY(pipeR + 5, 0, pipeH - 2),
+              ox + isoX(spoutLen, 0), oy + isoY(spoutLen, 0, pipeH - 5),
+              ox + isoX(spoutLen, 0), oy + isoY(spoutLen, 0, pipeH - 12)
             );
-            ctx.lineTo(ox + isoX(spoutLen - 6, 0), oy + isoY(spoutLen - 6, 0, pipeH - 14));
+            ctx.lineTo(ox + isoX(spoutLen - 5, 0), oy + isoY(spoutLen - 5, 0, pipeH - 12));
             ctx.bezierCurveTo(
-              ox + isoX(spoutLen - 6, 0), oy + isoY(spoutLen - 6, 0, pipeH - 10),
-              ox + isoX(pipeR, 0), oy + isoY(pipeR, 0, pipeH - 10),
-              ox + isoX(pipeR, 0), oy + isoY(pipeR, 0, pipeH - 10)
+              ox + isoX(spoutLen - 5, 0), oy + isoY(spoutLen - 5, 0, pipeH - 8),
+              ox + isoX(pipeR, 0), oy + isoY(pipeR, 0, pipeH - 8),
+              ox + isoX(pipeR, 0), oy + isoY(pipeR, 0, pipeH - 8)
             );
             ctx.stroke();
 
             // Aerator Spout Ring
             ctx.beginPath();
             ctx.ellipse(
-              ox + isoX(spoutLen - 3, 0),
-              oy + isoY(spoutLen - 3, 0, pipeH - 14),
-              3.5, 1.8, 0, 0, Math.PI * 2
+              ox + isoX(spoutLen - 2.5, 0),
+              oy + isoY(spoutLen - 2.5, 0, pipeH - 12),
+              3, 1.5, 0, 0, Math.PI * 2
             );
             ctx.stroke();
 
@@ -287,32 +286,30 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.strokeStyle = '#64748b';
             ctx.lineWidth = 0.85;
             ctx.beginPath();
-            const vY = oy + isoY(0, 0, pipeH + 8);
-            // Handle spindle
+            const vY = oy + isoY(0, 0, pipeH + 6);
             ctx.moveTo(ox, oy + isoY(0, 0, pipeH));
             ctx.lineTo(ox, vY);
-            // 4-prong wheel
-            ctx.moveTo(ox - 10, vY - 4);
-            ctx.lineTo(ox + 10, vY + 4);
-            ctx.moveTo(ox + 10, vY - 4);
-            ctx.lineTo(ox - 10, vY + 4);
+            ctx.moveTo(ox - 8, vY - 3);
+            ctx.lineTo(ox + 8, vY + 3);
+            ctx.moveTo(ox + 8, vY - 3);
+            ctx.lineTo(ox - 8, vY + 3);
             ctx.stroke();
 
-            // Delicate Suspended Falling Water Droplet
+            // Falling Water Droplet
             ctx.strokeStyle = '#0284c7';
             ctx.lineWidth = 0.9;
-            const dropX = ox + isoX(spoutLen - 3, 0);
-            const dropY = oy + isoY(spoutLen - 3, 0, pipeH - 20) + (currentRef.current.y * 8);
+            const dropX = ox + isoX(spoutLen - 2.5, 0);
+            const dropY = oy + isoY(spoutLen - 2.5, 0, pipeH - 17) + (currentRef.current.y * 6);
             ctx.beginPath();
-            ctx.moveTo(dropX, dropY - 5);
-            ctx.bezierCurveTo(dropX + 2.5, dropY - 2, dropX + 2.5, dropY + 3, dropX, dropY + 3);
-            ctx.bezierCurveTo(dropX - 2.5, dropY + 3, dropX - 2.5, dropY - 2, dropX, dropY - 5);
+            ctx.moveTo(dropX, dropY - 4);
+            ctx.bezierCurveTo(dropX + 2, dropY - 1, dropX + 2, dropY + 2.5, dropX, dropY + 2.5);
+            ctx.bezierCurveTo(dropX - 2, dropY + 2.5, dropX - 2, dropY - 1, dropX, dropY - 4);
             ctx.closePath();
             ctx.stroke();
 
             // Ground Surface Ripple Ring
             ctx.beginPath();
-            ctx.ellipse(dropX, dropY + 16, 8, 3.5, 0, 0, Math.PI * 2);
+            ctx.ellipse(dropX, dropY + 12, 7, 3, 0, 0, Math.PI * 2);
             ctx.stroke();
             break;
           }
@@ -321,9 +318,9 @@ export default function HairlineCardBackdrop({ category }) {
             // ==========================================
             // ISOMETRIC MODULAR SWITCHBOARD & MCB
             // ==========================================
-            const plateW = 48;
-            const plateH = 34;
-            const plateDepth = 5;
+            const plateW = 40;
+            const plateH = 28;
+            const plateDepth = 4;
 
             // Faceplate Front
             ctx.beginPath();
@@ -346,26 +343,25 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.strokeStyle = '#64748b';
             ctx.lineWidth = 0.85;
             for (let i = 0; i < 2; i++) {
-              const swX = 8 + i * 14;
+              const swX = 6 + i * 11;
               ctx.beginPath();
-              ctx.rect(ox + isoX(swX, 0) - 4, oy + isoY(swX, 0, 22) - 8, 8, 14);
+              ctx.rect(ox + isoX(swX, 0) - 3, oy + isoY(swX, 0, 18) - 6, 6, 12);
               ctx.stroke();
-              // Rocker crease
               ctx.beginPath();
-              ctx.moveTo(ox + isoX(swX, 0) - 4, oy + isoY(swX, 0, 22) - 1);
-              ctx.lineTo(ox + isoX(swX, 0) + 4, oy + isoY(swX, 0, 22) - 1);
+              ctx.moveTo(ox + isoX(swX, 0) - 3, oy + isoY(swX, 0, 18) - 1);
+              ctx.lineTo(ox + isoX(swX, 0) + 3, oy + isoY(swX, 0, 18) - 1);
               ctx.stroke();
             }
 
             // MCB Miniature Breaker Toggle Slot
-            const mcbX = 36;
+            const mcbX = 29;
             ctx.beginPath();
-            ctx.rect(ox + isoX(mcbX, 0) - 4, oy + isoY(mcbX, 0, 22) - 9, 8, 16);
+            ctx.rect(ox + isoX(mcbX, 0) - 3, oy + isoY(mcbX, 0, 18) - 7, 6, 14);
             ctx.stroke();
             // Trip Lever
             ctx.beginPath();
-            ctx.moveTo(ox + isoX(mcbX, 0) - 2, oy + isoY(mcbX, 0, 25));
-            ctx.lineTo(ox + isoX(mcbX, 0) + 2, oy + isoY(mcbX, 0, 21));
+            ctx.moveTo(ox + isoX(mcbX, 0) - 1.5, oy + isoY(mcbX, 0, 20));
+            ctx.lineTo(ox + isoX(mcbX, 0) + 1.5, oy + isoY(mcbX, 0, 17));
             ctx.stroke();
 
             // Diagnostic Conduit Trace Spark
@@ -375,9 +371,9 @@ export default function HairlineCardBackdrop({ category }) {
             const sx = ox + isoX(plateW, 0);
             const sy = oy + isoY(plateW, 0, plateH / 2);
             ctx.moveTo(sx, sy);
-            ctx.lineTo(sx + 8, sy - 4);
-            ctx.lineTo(sx + 6, sy + 3);
-            ctx.lineTo(sx + 16, sy - 2);
+            ctx.lineTo(sx + 6, sy - 3);
+            ctx.lineTo(sx + 5, sy + 2);
+            ctx.lineTo(sx + 13, sy - 2);
             ctx.stroke();
             break;
           }
@@ -390,46 +386,42 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.strokeStyle = '#cbd5e1';
             ctx.lineWidth = 0.75;
             ctx.beginPath();
-            ctx.rect(ox - 24, oy - 26, 42, 46);
+            ctx.rect(ox - 20, oy - 22, 36, 38);
             ctx.stroke();
 
-            // Diagonal Texture Hatching on Wall
+            // Diagonal Texture Hatching
             ctx.beginPath();
-            for (let d = -20; d < 40; d += 8) {
-              ctx.moveTo(ox + d - 18, oy - 26);
-              ctx.lineTo(ox + d + 8, oy + 20);
+            for (let d = -16; d < 32; d += 6) {
+              ctx.moveTo(ox + d - 14, oy - 22);
+              ctx.lineTo(ox + d + 6, oy + 16);
             }
             ctx.stroke();
 
             // Cylindrical Paint Roller Drum
             ctx.strokeStyle = '#2563eb';
             ctx.lineWidth = 1;
-            const rLen = 28;
-            const rRad = 7;
+            const rLen = 22;
+            const rRad = 6;
             ctx.beginPath();
-            // Left Ellipse
-            ctx.ellipse(ox - 10, oy - 2, rRad, rRad * 0.5, Math.PI / 4, 0, Math.PI * 2);
-            // Cylinder Body
-            ctx.moveTo(ox - 10 + rRad * 0.7, oy - 2 - rRad * 0.7);
-            ctx.lineTo(ox - 10 + rLen + rRad * 0.7, oy - 2 + rLen * 0.3 - rRad * 0.7);
-            ctx.moveTo(ox - 10 - rRad * 0.7, oy - 2 + rRad * 0.7);
-            ctx.lineTo(ox - 10 + rLen - rRad * 0.7, oy - 2 + rLen * 0.3 + rRad * 0.7);
-            // Right Ellipse
-            ctx.ellipse(ox - 10 + rLen, oy - 2 + rLen * 0.3, rRad, rRad * 0.5, Math.PI / 4, 0, Math.PI * 2);
+            ctx.ellipse(ox - 8, oy - 2, rRad, rRad * 0.5, Math.PI / 4, 0, Math.PI * 2);
+            ctx.moveTo(ox - 8 + rRad * 0.7, oy - 2 - rRad * 0.7);
+            ctx.lineTo(ox - 8 + rLen + rRad * 0.7, oy - 2 + rLen * 0.3 - rRad * 0.7);
+            ctx.moveTo(ox - 8 - rRad * 0.7, oy - 2 + rRad * 0.7);
+            ctx.lineTo(ox - 8 + rLen - rRad * 0.7, oy - 2 + rLen * 0.3 + rRad * 0.7);
+            ctx.ellipse(ox - 8 + rLen, oy - 2 + rLen * 0.3, rRad, rRad * 0.5, Math.PI / 4, 0, Math.PI * 2);
             ctx.stroke();
 
             // Roller Wire Steel Frame & Handle
             ctx.strokeStyle = '#64748b';
             ctx.lineWidth = 0.85;
             ctx.beginPath();
-            const axisX = ox - 10 + rLen;
+            const axisX = ox - 8 + rLen;
             const axisY = oy - 2 + rLen * 0.3;
             ctx.moveTo(axisX, axisY);
-            ctx.lineTo(axisX + 8, axisY + 3);
-            ctx.lineTo(axisX + 6, axisY + 18);
-            ctx.lineTo(axisX - 4, axisY + 22);
-            // Ergonomic grip handle
-            ctx.lineTo(axisX - 16, axisY + 36);
+            ctx.lineTo(axisX + 6, axisY + 2);
+            ctx.lineTo(axisX + 4, axisY + 14);
+            ctx.lineTo(axisX - 3, axisY + 18);
+            ctx.lineTo(axisX - 12, axisY + 28);
             ctx.stroke();
             break;
           }
@@ -439,20 +431,20 @@ export default function HairlineCardBackdrop({ category }) {
             // ==========================================
             // ISOMETRIC FREESTANDING BATHTUB & MIXER
             // ==========================================
-            const tubRx = 28;
-            const tubRy = 14;
-            const tubH = 18;
+            const tubRx = 24;
+            const tubRy = 12;
+            const tubH = 15;
 
             // Outer Top Rim Ellipse
             ctx.beginPath();
             ctx.ellipse(ox, oy, tubRx, tubRy, 0, 0, Math.PI * 2);
             ctx.stroke();
 
-            // Inner Water Rim Ellipse (dim crease)
+            // Inner Water Rim Ellipse
             ctx.strokeStyle = '#64748b';
             ctx.lineWidth = 0.75;
             ctx.beginPath();
-            ctx.ellipse(ox, oy, tubRx - 3, tubRy - 2, 0, 0, Math.PI * 2);
+            ctx.ellipse(ox, oy, tubRx - 2.5, tubRy - 1.8, 0, 0, Math.PI * 2);
             ctx.stroke();
 
             // Tub Basin Bottom Silhouette
@@ -461,8 +453,8 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.beginPath();
             ctx.moveTo(ox - tubRx, oy);
             ctx.bezierCurveTo(
-              ox - tubRx + 3, oy + tubH,
-              ox + tubRx - 3, oy + tubH,
+              ox - tubRx + 2.5, oy + tubH,
+              ox + tubRx - 2.5, oy + tubH,
               ox + tubRx, oy
             );
             ctx.stroke();
@@ -480,24 +472,13 @@ export default function HairlineCardBackdrop({ category }) {
             ctx.beginPath();
             const fx = ox - tubRx * 0.45;
             const fy = oy - tubRy * 0.6;
-            ctx.moveTo(fx, fy + 8);
-            ctx.lineTo(fx, fy - 16);
-            ctx.bezierCurveTo(fx, fy - 24, fx + 10, fy - 24, fx + 10, fy - 14);
+            ctx.moveTo(fx, fy + 6);
+            ctx.lineTo(fx, fy - 13);
+            ctx.bezierCurveTo(fx, fy - 19, fx + 8, fy - 19, fx + 8, fy - 11);
             ctx.stroke();
             break;
           }
         }
-
-        // Corner Calibration Drafting Tick Marks (Architectural touch)
-        const mLen = 6;
-        ctx.strokeStyle = '#94a3b8';
-        ctx.lineWidth = 0.7;
-        ctx.beginPath();
-        // Top-right corner
-        ctx.moveTo(w - 14 - mLen, 14); ctx.lineTo(w - 14, 14); ctx.lineTo(w - 14, 14 + mLen);
-        // Bottom-right corner
-        ctx.moveTo(w - 14 - mLen, h - 14); ctx.lineTo(w - 14, h - 14); ctx.lineTo(w - 14, h - 14 - mLen);
-        ctx.stroke();
 
         ctx.restore();
       }
