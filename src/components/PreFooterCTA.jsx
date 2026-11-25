@@ -1,47 +1,79 @@
 import React from 'react';
-import { ArrowRight, MessageCircle } from 'lucide-react';
+import { ArrowRight, MessageCircle, MapPin, Phone, ShieldCheck, Clock } from 'lucide-react';
 
 export default function PreFooterCTA({ onOpenBooking }) {
   return (
-    <section className="py-20 px-4 sm:px-8 bg-[#18191e] text-[#f6f5f0] border-b border-white/10">
-      <div className="max-w-5xl mx-auto bg-[#121316] border border-white/15 rounded-3xl p-8 sm:p-14 text-center relative overflow-hidden shadow-2xl">
-        <div className="inline-flex items-center gap-2 bg-[#ccff00]/10 border border-[#ccff00]/30 px-3 py-1 rounded text-xs font-mono text-[#ccff00] uppercase tracking-wider mb-4">
-          PROPERTY MAINTENANCE
-        </div>
+    <section className="py-16 sm:py-24 px-4 sm:px-8 bg-[var(--surface-canvas)] border-b border-[var(--border-subtle)]">
+      <div className="max-w-[1280px] mx-auto">
+        <div className="relative rounded-3xl bg-[var(--surface-dark)] text-white p-8 sm:p-14 lg:p-16 overflow-hidden shadow-xl border border-slate-800">
+          
+          {/* Subtle Ambient Background Depth */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[var(--accent-primary)]/10 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-80 h-80 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
-        {/* Exact Original Heading */}
-        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight font-display max-w-2xl mx-auto">
-          Your next step starts here.
-        </h2>
+          <div className="relative z-10 max-w-3xl mx-auto text-center space-y-6">
+            {/* Trust Pill */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs text-white/90">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span>Available Across 15 Ahmedabad Zones</span>
+            </div>
 
-        {/* Exact Original Subtitle */}
-        <p className="text-sm sm:text-base text-[#a0a4b0] mt-4 max-w-xl mx-auto leading-relaxed font-normal">
-          Tell Home Hancer Services Pvt Ltd what you’re looking for. We’re here to help you get started.
-        </p>
+            {/* Exact Words Main Headline */}
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] leading-[1.1] text-white">
+              Your next step starts here.
+            </h2>
 
-        {/* Action Buttons */}
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <button
-            onClick={() => onOpenBooking()}
-            className="px-8 py-3.5 bg-[#ccff00] hover:bg-[#b8e600] active:scale-98 text-[#121316] font-mono font-bold text-xs uppercase rounded-xl flex items-center gap-2 shadow-lg transition-all cursor-pointer"
-          >
-            <span>Contact Us</span>
-            <ArrowRight className="w-4 h-4" />
-          </button>
+            {/* Exact Words Subtitle */}
+            <p className="text-sm sm:text-base md:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+              Tell Home Hancer Services Pvt Ltd what you’re looking for. We’re here to help you get started.
+            </p>
 
-          <a
-            href="https://wa.me/919157691572?text=Hello%20Home%20Hancer%20Services%20Pvt%20Ltd,%20I%20am%20looking%20for%20property%20maintenance%20in%20Ahmedabad."
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-8 py-3.5 bg-[#1a1c21] hover:bg-[#252830] text-white font-mono font-bold text-xs uppercase rounded-xl flex items-center gap-2 border border-white/20 transition-all"
-          >
-            <MessageCircle className="w-4 h-4 text-[#ccff00] fill-current" />
-            <span>Chat on WhatsApp</span>
-          </a>
-        </div>
+            {/* High-Converting Action Row */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3.5">
+              <button
+                type="button"
+                onClick={() => onOpenBooking && onOpenBooking()}
+                className="mayfly-btn w-full sm:w-auto px-8 h-12 text-sm shadow-lg shadow-blue-900/30"
+              >
+                <span className="btn-txt flex items-center justify-center gap-2">
+                  <span>Schedule Free Inspection</span>
+                  <ArrowRight className="w-4 h-4" />
+                </span>
+              </button>
 
-        <div className="mt-6 text-[11px] font-mono text-[#787c87]">
-          C-901 PNTC, Times Of India Press Road behind Titanium City Centre, Vejalpur, Ahmedabad • Phone: 9157691572
+              <a
+                href="https://wa.me/919157691572?text=Hello%20Home%20Hancer%20Services%20Pvt%20Ltd,%20I%20am%20looking%20for%20property%20maintenance%20in%20Ahmedabad."
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto px-6 h-12 rounded-full bg-white/10 hover:bg-white/15 text-white text-sm font-medium flex items-center justify-center gap-2 border border-white/20 transition-all cursor-pointer backdrop-blur-sm"
+              >
+                <MessageCircle className="w-4 h-4 text-emerald-400" />
+                <span>Chat on WhatsApp</span>
+              </a>
+            </div>
+
+            {/* Quiet Location & Contact Footnote */}
+            <div className="pt-4 flex flex-wrap items-center justify-center gap-4 text-xs text-slate-400">
+              <span className="flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>PNTC, Vejalpur, Ahmedabad</span>
+              </span>
+              <span>•</span>
+              <a
+                href="tel:9157691572"
+                className="flex items-center gap-1.5 hover:text-white transition-colors tabular-nums"
+              >
+                <Phone className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <span>+91 91576 91572</span>
+              </a>
+              <span>•</span>
+              <span className="flex items-center gap-1.5 text-emerald-400">
+                <Clock className="w-3.5 h-3.5 shrink-0" />
+                <span>Monday–Saturday: 9am–8pm</span>
+              </span>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
