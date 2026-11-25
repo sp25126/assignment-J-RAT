@@ -1,149 +1,266 @@
-import React, { useState } from 'react';
-import { ArrowLeftRight, CheckCircle2, ShieldCheck, Clock } from 'lucide-react';
-import { BEFORE_AFTER_ITEMS } from '../data/servicesData';
+import React, { useState, useRef } from 'react';
+import { 
+  ArrowLeftRight, ShieldCheck, Clock, CheckCircle2, 
+  MapPin, AlertCircle, Sparkles, ChevronRight, ArrowRight 
+} from 'lucide-react';
+import { BEFORE_AFTER_ITEMS } from '../data/transformationsData';
 
-export default function BeforeAfterSlider() {
+export default function BeforeAfterSlider({ onOpenBooking }) {
   const [sliderPos, setSliderPos] = useState(50);
   const [activeProjectIdx, setActiveProjectIdx] = useState(0);
+  const containerRef = useRef(null);
 
   const activeProject = BEFORE_AFTER_ITEMS[activeProjectIdx];
 
+  // Drag interaction support for mouse and touch
+  const handlePointerMove = (e) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const offsetX = clientX - rect.left;
+    const percent = Math.min(Math.max((offsetX / rect.width) * 100, 5), 95);
+    setSliderPos(percent);
+  };
+
   return (
-    <section id="transformations" className="py-20 px-4 sm:px-8 bg-[#121316] text-[#f6f5f0] border-b border-white/10">
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-white/10">
-          <div>
-            <div className="text-[11px] font-mono text-[#ccff00] uppercase tracking-wider mb-2">
-              REAL TRANSFORMATIONS // AHMEDABAD PORTFOLIO
+    <section
+      id="transformations"
+      className="py-16 sm:py-24 bg-[var(--surface-canvas)] border-b border-[var(--border-subtle)] relative overflow-hidden"
+    >
+      <div className="max-w-[1280px] mx-auto px-4 sm:px-8 space-y-10 sm:space-y-12">
+        
+        {/* ========================================================
+            HEADER & TAB NAVIGATION (Clear visual hierarchy)
+           ======================================================== */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-[var(--border-subtle)]">
+          <div className="space-y-2.5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--surface-card)] text-xs font-mono font-medium text-[var(--accent-primary)] border border-[var(--border-subtle)] shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>REAL TRANSFORMATIONS // AHMEDABAD PORTFOLIO</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
+
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] leading-[1.1] text-[var(--ink-primary)]">
               Before vs. After Craftsmanship
             </h2>
+
+            <p className="text-sm sm:text-base text-[var(--ink-secondary)] max-w-2xl leading-relaxed">
+              Drag the interactive slider across real completed residences in Vejalpur, Prahlad Nagar, and Satellite to inspect our structural and aesthetic workmanship.
+            </p>
           </div>
-          <div className="flex items-center gap-2">
-            {BEFORE_AFTER_ITEMS.map((item, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveProjectIdx(idx)}
-                className={`px-3 py-1.5 rounded text-xs font-mono font-bold uppercase transition-all ${
-                  activeProjectIdx === idx
-                    ? 'bg-[#ccff00] text-[#121316]'
-                    : 'bg-white/10 text-white/70 hover:bg-white/20'
-                }`}
-              >
-                Project 0{idx + 1}
-              </button>
-            ))}
+
+          {/* Project Switcher Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
+            {BEFORE_AFTER_ITEMS.map((item, idx) => {
+              const isSelected = activeProjectIdx === idx;
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    setActiveProjectIdx(idx);
+                    setSliderPos(50);
+                  }}
+                  className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap border flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-[var(--surface-card)] border-[var(--accent-primary)] text-[var(--ink-primary)] shadow-sm font-semibold'
+                      : 'bg-[var(--surface-card)]/60 border-[var(--border-subtle)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-card)]'
+                  }`}
+                >
+                  <span
+                    className={`w-2 h-2 rounded-full ${
+                      isSelected ? 'bg-[var(--accent-primary)]' : 'bg-[var(--border-strong)]'
+                    }`}
+                  />
+                  <span>Project 0{idx + 1}</span>
+                  <span className="text-[11px] text-[var(--ink-muted)] hidden sm:inline">
+                    ({item.category.split('&')[0].trim()})
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Project Detail Card */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pt-10 items-center">
-          {/* Left Metadata & Details (4 Cols) */}
-          <div className="lg:col-span-4 space-y-6">
-            <span className="text-xs font-mono text-[#ccff00] uppercase tracking-wider">
-              {activeProject.category}
-            </span>
-            <h3 className="text-2xl font-bold text-white font-display">
-              {activeProject.title}
-            </h3>
-
-            {/* Before Diagnostic */}
-            <div className="bg-[#1a1c21] border border-white/10 p-4 rounded-xl">
-              <span className="text-[11px] font-mono text-rose-400 font-bold block mb-1">
-                ORIGINAL CONDITION (BEFORE):
-              </span>
-              <p className="text-xs text-white/70 leading-relaxed">
-                {activeProject.beforeText}
-              </p>
+        {/* ========================================================
+            MAIN WORKMANSHIP SHOWCASE STAGE
+           ======================================================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* LEFT: Context & Technical Verification Card (5 Cols) */}
+          <div className="lg:col-span-5 space-y-5">
+            {/* Title & Location Header */}
+            <div className="space-y-1.5">
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent-primary)] font-semibold uppercase tracking-wider">
+                <span>{activeProject.category}</span>
+                <span>•</span>
+                <span className="text-[var(--ink-muted)] flex items-center gap-1 font-normal lowercase tracking-normal">
+                  <MapPin className="w-3 h-3 text-[var(--ink-muted)]" />
+                  {activeProject.locality}
+                </span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-[var(--ink-primary)]">
+                {activeProject.title}
+              </h3>
             </div>
 
-            {/* After Solution */}
-            <div className="bg-[#1a1c21] border border-[#ccff00]/30 p-4 rounded-xl">
-              <span className="text-[11px] font-mono text-[#ccff00] font-bold block mb-1">
-                HOME HANCER EXECUTION (AFTER):
-              </span>
-              <p className="text-xs text-white/90 leading-relaxed font-medium">
-                {activeProject.afterText}
-              </p>
+            {/* Visual Contrast Cards (Before vs. After Comparison) */}
+            <div className="space-y-3">
+              {/* Original Condition Card (Red/Alert Cue) */}
+              <div className="p-4 rounded-xl bg-[var(--surface-card)] border border-rose-200/80 shadow-[0_1px_3px_rgba(244,63,94,0.04)]">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-5 h-5 rounded-md bg-rose-50 text-rose-600 flex items-center justify-center shrink-0">
+                    <AlertCircle className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-xs font-semibold text-rose-700 tracking-wide uppercase">
+                    Initial Inspection (Before)
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-[var(--ink-secondary)] leading-relaxed pl-7">
+                  {activeProject.beforeCondition}
+                </p>
+              </div>
+
+              {/* Handover Quality Card (Emerald/Success Cue) */}
+              <div className="p-4 rounded-xl bg-[var(--surface-card)] border border-emerald-200/80 shadow-[0_1px_3px_rgba(16,185,129,0.04)]">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <div className="w-5 h-5 rounded-md bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                  </div>
+                  <span className="text-xs font-semibold text-emerald-700 tracking-wide uppercase">
+                    Engineered Handover (After)
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm text-[var(--ink-primary)] font-medium leading-relaxed pl-7">
+                  {activeProject.afterSolution}
+                </p>
+              </div>
             </div>
 
-            <div className="flex items-center gap-4 text-xs font-mono text-[#a0a4b0]">
-              <span className="flex items-center gap-1.5 text-white">
-                <Clock className="w-3.5 h-3.5 text-[#ccff00]" />
-                {activeProject.timeTaken}
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1.5 text-[#ccff00]">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                {activeProject.savings}
-              </span>
+            {/* Spec & Timing Badges */}
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <div className="p-3 rounded-xl bg-[var(--surface-card)] border border-[var(--border-subtle)]">
+                <div className="flex items-center gap-1.5 text-xs text-[var(--ink-muted)] mb-0.5">
+                  <Clock className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+                  <span>Execution Speed</span>
+                </div>
+                <div className="text-sm font-semibold text-[var(--ink-primary)]">
+                  {activeProject.timeTaken}
+                </div>
+              </div>
+
+              <div className="p-3 rounded-xl bg-[var(--surface-card)] border border-[var(--border-subtle)]">
+                <div className="flex items-center gap-1.5 text-xs text-[var(--ink-muted)] mb-0.5">
+                  <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Protection</span>
+                </div>
+                <div className="text-sm font-semibold text-emerald-600">
+                  {activeProject.warranty}
+                </div>
+              </div>
             </div>
+
+            {/* Client Testimonial Snippet */}
+            <div className="p-3.5 rounded-xl bg-[var(--surface-muted)]/70 border border-[var(--border-subtle)] text-xs text-[var(--ink-secondary)] italic">
+              "{activeProject.clientQuote}"
+            </div>
+
+            {/* Direct Consultation Trigger */}
+            <button
+              type="button"
+              onClick={() => onOpenBooking && onOpenBooking({ name: activeProject.title })}
+              className="mayfly-btn w-full h-11 text-xs"
+            >
+              <span className="btn-txt flex items-center justify-center gap-2">
+                <span>Book Free Inspection For Your Home</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </button>
           </div>
 
-          {/* Right Interactive Comparison Visualizer (8 Cols) */}
-          <div className="lg:col-span-8">
-            <div className="relative h-[380px] sm:h-[460px] rounded-2xl overflow-hidden border border-white/15 bg-black select-none shadow-2xl">
-              {/* After Layer (Background) */}
-              <div 
-                className="absolute inset-0 bg-cover bg-center flex items-center justify-center p-8 text-center"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(18, 19, 22, 0.4), rgba(18, 19, 22, 0.6)), url('https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=1200&q=80')`
-                }}
+          {/* RIGHT: Interactive Tactile Slider (7 Cols) */}
+          <div className="lg:col-span-7">
+            <div
+              ref={containerRef}
+              className="relative aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden border border-[var(--border-subtle)] bg-slate-900 shadow-xl select-none group touch-none cursor-ew-resize"
+              onMouseMove={(e) => e.buttons === 1 && handlePointerMove(e)}
+              onTouchMove={handlePointerMove}
+            >
+              {/* After Layer (Full Viewport) */}
+              <img
+                src={activeProject.afterImg}
+                alt={`After ${activeProject.title}`}
+                className="absolute inset-0 w-full h-full object-cover"
+                draggable={false}
+              />
+
+              {/* After Floating Badge */}
+              <div className="absolute top-4 right-4 z-10 px-3 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wide flex items-center gap-1.5 shadow-md">
+                <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                <span>AFTER COMPLETED WORK</span>
+              </div>
+
+              {/* Before Layer (Clipped by slider position) */}
+              <div
+                className="absolute inset-y-0 left-0 overflow-hidden border-r-2 border-white shadow-[0_0_20px_rgba(0,0,0,0.5)] z-10"
+                style={{ width: `${sliderPos}%` }}
               >
-                <div className="bg-black/75 backdrop-blur-md border border-[#ccff00]/40 p-6 rounded-xl max-w-md">
-                  <span className="text-[10px] font-mono text-[#ccff00] font-bold uppercase tracking-widest block mb-1">
-                    AFTER COMPLETED MAKEOVER
-                  </span>
-                  <h4 className="text-white font-bold text-lg">Pristine Engineered Finish</h4>
-                  <p className="text-xs text-white/80 mt-1">
-                    Concealed piping, Italian tile layout, seamless grouting & zero leaks.
-                  </p>
+                {/* Mirror Container to maintain proper image scaling */}
+                <div
+                  className="absolute inset-y-0 left-0 h-full"
+                  style={{
+                    width: containerRef.current ? `${containerRef.current.offsetWidth}px` : '100%'
+                  }}
+                >
+                  <img
+                    src={activeProject.beforeImg}
+                    alt={`Before ${activeProject.title}`}
+                    className="w-full h-full object-cover filter contrast-[1.05] brightness-90"
+                    draggable={false}
+                  />
+                </div>
+
+                {/* Before Floating Badge */}
+                <div className="absolute top-4 left-4 z-20 px-3 py-1.5 rounded-full bg-slate-900/85 backdrop-blur-md border border-white/20 text-white text-xs font-semibold tracking-wide flex items-center gap-1.5 shadow-md">
+                  <span className="w-2 h-2 rounded-full bg-rose-500" />
+                  <span>BEFORE INTERVENTION</span>
                 </div>
               </div>
 
-              {/* Before Layer (Clipped Foreground) */}
+              {/* Tactile Splitter Handle */}
               <div
-                className="absolute inset-y-0 left-0 overflow-hidden bg-cover bg-center border-r-2 border-[#ccff00]"
-                style={{
-                  width: `${sliderPos}%`,
-                  backgroundImage: `linear-gradient(rgba(18, 19, 22, 0.6), rgba(18, 19, 22, 0.8)), url('https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=80')`
-                }}
-              >
-                <div className="absolute top-6 left-6 bg-black/85 px-3 py-1.5 rounded border border-white/20 text-xs font-mono font-bold text-rose-400">
-                  BEFORE INTERVENTION
-                </div>
-              </div>
-
-              {/* Slider Handle */}
-              <div
-                className="absolute inset-y-0 flex items-center justify-center pointer-events-none"
+                className="absolute inset-y-0 z-30 pointer-events-none flex items-center justify-center"
                 style={{ left: `${sliderPos}%`, transform: 'translateX(-50%)' }}
               >
-                <div className="w-10 h-10 rounded-full bg-[#ccff00] text-[#121316] flex items-center justify-center shadow-lg pointer-events-auto cursor-ew-resize">
-                  <ArrowLeftRight className="w-5 h-5" />
+                {/* Vertical Divider Line with Glow */}
+                <div className="w-0.5 h-full bg-white shadow-[0_0_12px_rgba(255,255,255,0.8)]" />
+
+                {/* Center Circular Grab Button */}
+                <div className="absolute w-11 h-11 rounded-full bg-white text-[var(--ink-primary)] shadow-2xl flex items-center justify-center border-2 border-[var(--accent-primary)] group-hover:scale-105 transition-transform duration-150">
+                  <ArrowLeftRight className="w-4 h-4 text-[var(--accent-primary)]" strokeWidth={2.5} />
                 </div>
               </div>
 
-              {/* Range Input Slider (Overlay) */}
+              {/* Range Input for Instant Drag Interaction */}
               <input
                 type="range"
                 min="5"
                 max="95"
                 value={sliderPos}
                 onChange={(e) => setSliderPos(Number(e.target.value))}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
-                aria-label="Drag to compare before and after"
+                className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-40"
+                aria-label="Drag to compare before and after craftsmanship"
               />
 
-              {/* Hint badge */}
-              <div className="absolute bottom-4 right-4 bg-black/70 backdrop-blur px-3 py-1 rounded text-[11px] font-mono text-white/70 pointer-events-none">
-                DRAG SLIDER TO COMPARE
+              {/* Drag Prompt Hint Pill */}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[11px] font-medium tracking-wide pointer-events-none flex items-center gap-1.5">
+                <ArrowLeftRight className="w-3 h-3 text-white" />
+                <span>Drag to compare workmanship</span>
               </div>
             </div>
           </div>
+
         </div>
+
       </div>
     </section>
   );
