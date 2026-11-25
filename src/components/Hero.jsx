@@ -147,7 +147,7 @@ export default function Hero({ onOpenBooking }) {
       const drawH = img.naturalHeight * scale;
 
       const dx = (w - drawW) / 2 + panX * w;
-      const dy = isMobile ? (h - drawH) / 2 : (h - drawH) / 2 + panY * h;
+      const dy = isMobile ? Math.max(h * 0.56, h - drawH - 72) : (h - drawH) / 2 + panY * h;
       ctx.drawImage(img, dx, dy, drawW, drawH);
       ctx.restore();
     };
@@ -260,7 +260,7 @@ export default function Hero({ onOpenBooking }) {
 
         {/* Soft Top Gradient Scrim so Hero Text stays 100% legible */}
         <div
-          className={`absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-[var(--surface-canvas)]/95 via-[var(--surface-canvas)]/75 to-transparent pointer-events-none transition-opacity duration-500 ${
+          className={`absolute inset-x-0 top-0 h-80 md:h-72 bg-gradient-to-b from-[#e9ecf3] via-[#e9ecf3]/85 md:from-[var(--surface-canvas)]/95 md:via-[var(--surface-canvas)]/75 to-transparent pointer-events-none transition-opacity duration-500 ${
             isIntroVisible ? 'opacity-100' : 'opacity-40'
           }`}
         />
