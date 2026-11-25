@@ -7,6 +7,7 @@ import {
 } from 'lucide-react';
 import { REAL_GALLERY } from '../data/galleryData';
 import { POPULAR_SERVICES, SERVICE_CATEGORIES } from '../data/servicesData';
+import HairlineCardBackdrop from './HairlineCardBackdrop';
 
 const BEST_RECOMMENDATIONS = [
   { label: 'Tap Leakage', query: 'tap' },
@@ -425,8 +426,11 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
             {filteredServices.map((service) => (
               <div
                 key={service.id}
-                className="spicy-card p-6 flex flex-col justify-between group"
+                className="spicy-card p-6 flex flex-col justify-between group relative"
               >
+                {/* Hairline Interactive Isometric Blueprint Hover Effect */}
+                <HairlineCardBackdrop category={service.category} />
+
                 {/* Spicy Rat 83 Animated Rotating Border */}
                 <div className="spicy-border" aria-hidden="true" />
                 <span className="spicy-bottom-text" aria-hidden="true">Verified Service</span>
@@ -473,7 +477,7 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
                     <button
                       type="button"
                       onClick={() => onSelectService && onSelectService(service)}
-                      className="w-full py-2 px-3 text-xs font-medium rounded-lg text-white bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] transition-colors flex items-center justify-center gap-1 cursor-pointer shadow-sm"
+                      className="w-full py-2.5 px-3 text-xs font-medium rounded-lg text-white bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] transition-all flex items-center justify-center gap-1 cursor-pointer shadow-sm active:scale-[0.98]"
                     >
                       <span>Book</span>
                       <ArrowRight className="w-3 h-3" />
@@ -483,7 +487,7 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
                       href={`https://wa.me/919157691572?text=${encodeURIComponent(`Hello Home Hancer, I want to inquire about ${service.name} (Starting ${service.price}) in Ahmedabad.`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full py-2 px-3 text-xs font-medium text-[var(--ink-primary)] bg-[var(--surface-muted)] hover:bg-[var(--border-subtle)] border border-[var(--border-subtle)] rounded-lg transition-colors flex items-center justify-center gap-1"
+                      className="w-full py-2.5 px-3 text-xs font-medium text-[var(--ink-primary)] hover:text-[var(--accent-primary)] bg-[var(--surface-muted)] hover:bg-[var(--surface-card)] border border-[var(--border-subtle)] hover:border-[var(--border-strong)] rounded-lg transition-all flex items-center justify-center gap-1 active:scale-[0.98]"
                     >
                       <MessageCircle className="w-3 h-3 text-emerald-600 fill-emerald-600/20" />
                       <span>WhatsApp</span>
