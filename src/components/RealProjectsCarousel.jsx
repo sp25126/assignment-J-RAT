@@ -206,7 +206,7 @@ export default function RealProjectsCarousel({ onOpenBooking }) {
         </div>
 
         {/* Thumbnail Strip */}
-        <div className="mt-4 grid grid-cols-5 sm:grid-cols-10 gap-2 overflow-x-auto pb-1">
+        <div className="mt-4 grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-2 overflow-x-auto pb-1">
           {REAL_GALLERY.map((project, idx) => (
             <button
               key={project.name}

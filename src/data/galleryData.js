@@ -1,72 +1,65 @@
 export const REAL_GALLERY = [
   {
-    "name": "gallery-1-renovation.jpg",
-    "src": "/gallery/gallery-1-renovation.jpg",
-    "title": "Complete Home Renovation",
-    "category": "Turnkey Renovation",
-    "desc": "Interior living room and modular design execution in Vejalpur, Ahmedabad."
+    name: 'gallery-3-bathroom-remodel.jpg',
+    src: '/gallery/gallery-3-bathroom-remodel.jpg',
+    title: 'Rooftop Water Tank & Pipeline Installation',
+    category: 'Plumbing & Water Systems',
+    desc: 'Commercial-grade dual PVC overhead water storage tanks with UPVC distribution manifold and pressure balancing.'
   },
   {
-    "name": "gallery-2-modular-kitchen.jpg",
-    "src": "/gallery/gallery-2-modular-kitchen.jpg",
-    "title": "Modern Modular Kitchen",
-    "category": "Carpentry & Kitchen",
-    "desc": "Custom soft-close cabinetry, seamless quartz countertop, and precision tile work."
+    name: 'gallery-2-modular-kitchen.jpg',
+    src: '/gallery/gallery-2-modular-kitchen.jpg',
+    title: 'High-Pressure Water Tank Descaling',
+    category: 'Tank Cleaning & Hygiene',
+    desc: 'Deep chemical-free sanitization and high-pressure jet wash removing internal sediment and microbial film.'
   },
   {
-    "name": "gallery-3-bathroom-remodel.jpg",
-    "src": "/gallery/gallery-3-bathroom-remodel.jpg",
-    "title": "Luxury Bathroom Remodel",
-    "category": "Plumbing & Waterproofing",
-    "desc": "Complete wall-hung sanitary fittings, shower partition, and anti-skid vitrified tiles."
+    name: 'gallery-8-plumbing-fixtures.jpg',
+    src: '/gallery/gallery-8-plumbing-fixtures.jpg',
+    title: 'Under-Sink Piping & Waste Line Repair',
+    category: 'Kitchen Plumbing',
+    desc: 'Precision leveling of lower cabinetry sliding tracks, P-trap leak inspection, and RO drainage line fitting.'
   },
   {
-    "name": "gallery-4-living-furnishing.jpg",
-    "src": "/gallery/gallery-4-living-furnishing.jpg",
-    "title": "Custom Woodwork & TV Unit",
-    "category": "Carpentry Services",
-    "desc": "Fluted wooden paneling with warm ambient profile lighting and concealed wiring."
+    name: 'gallery-7-electrical-lighting.jpg',
+    src: '/gallery/gallery-7-electrical-lighting.jpg',
+    title: 'Modular Kitchen Counter Cabinet Fitting',
+    category: 'Carpentry & Cabinetry',
+    desc: 'On-site carpenter mounting aluminum frame sliding cabinets with stainless steel cutlery organizers and quartz edge protection.'
   },
   {
-    "name": "gallery-5-ac-installation.jpg",
-    "src": "/gallery/gallery-5-ac-installation.jpg",
-    "title": "AC Outdoor & Indoor Installation",
-    "category": "Air Conditioning",
-    "desc": "High-pressure jet wash, refrigerant level optimization, and clean outdoor bracket mount."
+    name: 'gallery-6-bedroom-interior.jpg',
+    src: '/gallery/gallery-6-bedroom-interior.jpg',
+    title: 'Completed Modular Kitchen Handover',
+    category: 'Kitchen Renovation',
+    desc: 'Glazed backsplash tile layout, heavy-duty sliding base cabinets, and integrated electrical appliance switchboards.'
   },
   {
-    "name": "gallery-6-bedroom-interior.jpg",
-    "src": "/gallery/gallery-6-bedroom-interior.jpg",
-    "title": "Master Bedroom Wardrobe",
-    "category": "Custom Furniture",
-    "desc": "Floor-to-ceiling sliding wardrobe with premium laminate finish and bronze mirror insert."
+    name: 'gallery-5-ac-installation.jpg',
+    src: '/gallery/gallery-5-ac-installation.jpg',
+    title: 'Vanity Cabinet & Washbasin Fitting',
+    category: 'Bathroom Remodeling',
+    desc: 'Custom waterproof PVC vanity basin cabinet with mirror bracket mounting and anti-fatigue drainage matting.'
   },
   {
-    "name": "gallery-7-electrical-lighting.jpg",
-    "src": "/gallery/gallery-7-electrical-lighting.jpg",
-    "title": "Architectural False Ceiling & Wiring",
-    "category": "Electrician & Lighting",
-    "desc": "COB spotlighting, LED cove strip installation, and certified safety switchboard testing."
+    name: 'gallery-9-exterior-renovation.jpg',
+    src: '/gallery/gallery-9-exterior-renovation.jpg',
+    title: 'Handcrafted Teak Wood Double Door',
+    category: 'Custom Carpentry',
+    desc: 'Detailed traditional carving with protective masking tape during wall frame fixing and polyurethane polishing.'
   },
   {
-    "name": "gallery-8-plumbing-fixtures.jpg",
-    "src": "/gallery/gallery-8-plumbing-fixtures.jpg",
-    "title": "CPVC Pipeline & Pressure Testing",
-    "category": "Plumbing Services",
-    "desc": "Concealed diverters, high-flow booster pump connection, and guaranteed leak-proofing."
+    name: 'gallery-10-site-supervision.jpg',
+    src: '/gallery/gallery-10-site-supervision.jpg',
+    title: 'Decorative Wall Tiling & Switchbox Cutout',
+    category: 'Tile Contractor & Masonry',
+    desc: 'Precision laser-guided dual-tone ceramic tile fixing with concealed electrical conduit pass-throughs.'
   },
   {
-    "name": "gallery-9-exterior-renovation.jpg",
-    "src": "/gallery/gallery-9-exterior-renovation.jpg",
-    "title": "Terrace & Wall Waterproofing",
-    "category": "Exterior Maintenance",
-    "desc": "Multi-layer elastomeric coating for heat reflection and monsoon rain protection."
-  },
-  {
-    "name": "gallery-10-site-supervision.jpg",
-    "src": "/gallery/gallery-10-site-supervision.jpg",
-    "title": "Verified On-Site Handover",
-    "category": "Quality Assurance",
-    "desc": "Thorough post-service cleanup, client walkthrough, and 30-day workmanship warranty."
+    name: 'gallery-4-living-furnishing.jpg',
+    src: '/gallery/gallery-4-living-furnishing.jpg',
+    title: 'Licensed Carpentry & Woodwork Services',
+    category: 'Verified Workmanship',
+    desc: 'Certified craftsmen equipped with industry-standard angle cutters, surface sanders, and free inspection visits.'
   }
 ];
