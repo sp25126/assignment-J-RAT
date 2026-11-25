@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import InteractiveHouseServices from './components/InteractiveHouseServices';
 import ServicesHub from './components/ServicesHub';
 import BeforeAfterSlider from './components/BeforeAfterSlider';
 import PricingPackages from './components/PricingPackages';
@@ -43,39 +44,44 @@ export default function App() {
         <Hero
           onOpenBooking={() => handleOpenBooking()}
           selectedArea={selectedArea}
-          onBookSuccess={(details) => console.log('Booked:', details)}
+          onBookSuccess={(details) => handleOpenBooking({ name: details.service })}
         />
 
-        {/* 3. Catalog & Curated Services Hub */}
+        {/* 3. Interactive 3D Villa Cross-Section with Room Zoom & Scrollytelling */}
+        <InteractiveHouseServices
+          onOpenBooking={(service) => handleOpenBooking(service)}
+        />
+
+        {/* 4. Complete Service Catalog & Filterable Grid */}
         <ServicesHub
           onSelectService={(service) => handleOpenBooking(service)}
         />
 
-        {/* 4. Interactive Before & After Craftsmanship Slider */}
+        {/* 5. Interactive Before & After Craftsmanship Slider */}
         <BeforeAfterSlider />
 
-        {/* 5. Fixed Rate Card & Tariff Comparison */}
+        {/* 6. Fixed Rate Card & Tariff Comparison */}
         <PricingPackages
           onOpenBooking={(title) => handleOpenBooking({ name: title })}
         />
 
-        {/* 6. Why Home Hancer Standard Comparison */}
+        {/* 7. Why Home Hancer Standard Comparison */}
         <WhyChooseUs />
 
-        {/* 7. Real Ahmedabad Google Reviews */}
+        {/* 8. Real Ahmedabad Google Reviews */}
         <ReviewsSection />
 
-        {/* 8. Concise FAQ Accordion */}
+        {/* 9. Concise FAQ Accordion */}
         <FAQSection />
       </main>
 
-      {/* 9. Comprehensive Footer */}
+      {/* 10. Comprehensive Footer */}
       <Footer onOpenBooking={() => handleOpenBooking()} />
 
-      {/* 10. Non-obstructive Mobile Sticky Action Bar */}
+      {/* 11. Non-obstructive Mobile Sticky Action Bar */}
       <MobileStickyBar onOpenBooking={() => handleOpenBooking()} />
 
-      {/* 11. Booking Modal Drawer */}
+      {/* 12. Booking Modal Drawer */}
       <BookingModal
         isOpen={modalOpen}
         onClose={handleCloseBooking}
