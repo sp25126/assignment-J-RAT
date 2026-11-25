@@ -52,9 +52,9 @@ export default function Header({ onOpenBooking }) {
 
           <button
             onClick={() => onOpenBooking()}
-            className="px-4 py-2 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] rounded-lg transition-colors cursor-pointer"
+            className="px-4 py-2 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.98] rounded-lg transition-all cursor-pointer shadow-sm"
           >
-            Contact us
+            Book Free Inspection
           </button>
         </div>
 
@@ -116,7 +116,7 @@ export default function Header({ onOpenBooking }) {
               }}
               className="px-4 py-2 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] rounded-lg transition-colors"
             >
-              Contact us
+              Book Free Inspection
             </button>
           </div>
         </div>

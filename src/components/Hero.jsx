@@ -1,16 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, MapPin, Phone, Check, ArrowDown } from 'lucide-react';
+import { Star, MapPin, Phone, Check, ArrowDown, ChevronDown, Wrench, Snowflake, Bath, Droplets, Zap, Hammer, Paintbrush, ShieldCheck, Utensils, Grid } from 'lucide-react';
 
 const HERO_SERVICES = [
-  'Air Conditioning',
-  'Bathroom Remodeling',
-  'Plumber',
-  'Electrician',
-  'Carpenter',
-  'Painting',
-  'Waterproofing',
-  'Kitchen Remodeling',
-  'Tile contractor'
+  { name: 'Air Conditioning', icon: Snowflake, badge: 'Popular' },
+  { name: 'Bathroom Remodeling', icon: Bath, badge: 'Specialist' },
+  { name: 'Plumber', icon: Droplets, badge: 'Fast Visit' },
+  { name: 'Electrician', icon: Zap, badge: 'Licensed' },
+  { name: 'Carpenter', icon: Hammer, badge: 'Woodwork' },
+  { name: 'Painting', icon: Paintbrush, badge: 'Interior' },
+  { name: 'Waterproofing', icon: ShieldCheck, badge: 'Monsoon' },
+  { name: 'Kitchen Remodeling', icon: Utensils, badge: 'Modular' },
+  { name: 'Tile contractor', icon: Grid, badge: 'Flooring' }
 ];
 
 const STAGES = [
@@ -86,15 +86,28 @@ const TOTAL_FRAMES = 120; // 5 seconds @ 24 fps
 
 export default function Hero({ onOpenBooking }) {
   const [selectedService, setSelectedService] = useState(HERO_SERVICES[0]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [phone, setPhone] = useState('');
   const [submitted, setSubmitted] = useState(false);
   const [activeStageIdx, setActiveStageIdx] = useState(0);
 
+  const dropdownRef = useRef(null);
   const trackRef = useRef(null);
   const canvasRef = useRef(null);
   const imagesRef = useRef([]);
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   // Preload all 6 Flow keyframes
   useEffect(() => {
@@ -313,7 +326,7 @@ export default function Hero({ onOpenBooking }) {
                     </div>
                     <div className="text-sm">
                       <p className="font-medium text-[var(--ink-primary)]">
-                        Enquiry received for {selectedService}
+                        Enquiry received for {selectedService.name}
                       </p>
                       <p className="text-[var(--ink-secondary)] tabular-nums text-xs">
                         We will contact {phone} during business hours (Monday–Saturday, 9am–8pm).
@@ -323,7 +336,7 @@ export default function Hero({ onOpenBooking }) {
                   <div className="flex items-center gap-3 shrink-0">
                     <a
                       href={`https://wa.me/919157691572?text=${encodeURIComponent(
-                        `I want to know more about ${selectedService}. My mobile number is ${phone}.`
+                        `I want to know more about ${selectedService.name}. My mobile number is ${phone}.`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -343,29 +356,87 @@ export default function Hero({ onOpenBooking }) {
               ) : (
                 <form
                   onSubmit={handleSubmit}
-                  className="bg-[var(--surface-card)]/95 backdrop-blur-md border border-[var(--border-subtle)] rounded-xl p-2 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-2 items-center"
+                  className="bg-[var(--surface-card)]/95 backdrop-blur-md border border-[var(--border-subtle)] rounded-xl p-2 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-2 items-center relative"
                 >
-                  <div className="md:col-span-5">
-                    <label htmlFor="hero-service-select" className="sr-only">
-                      Select service
-                    </label>
-                    <select
-                      id="hero-service-select"
-                      value={selectedService}
-                      onChange={(e) => setSelectedService(e.target.value)}
-                      className="w-full h-10 px-3 bg-transparent text-sm font-medium text-[var(--ink-primary)] rounded-lg border border-transparent hover:bg-[var(--surface-muted)] focus:bg-[var(--surface-card)] focus:border-[var(--border-strong)] focus:outline-none transition-colors cursor-pointer"
+                  {/* Custom Designed Service Dropdown Menu */}
+                  <div className="md:col-span-5 relative" ref={dropdownRef}>
+                    <button
+                      type="button"
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className="w-full h-11 px-3.5 bg-[var(--surface-canvas)] md:bg-transparent text-sm font-medium text-[var(--ink-primary)] rounded-lg border border-[var(--border-subtle)] md:border-transparent hover:bg-[var(--surface-muted)] focus:bg-[var(--surface-card)] focus:border-[var(--border-strong)] focus:outline-none transition-all flex items-center justify-between gap-2 cursor-pointer"
+                      aria-haspopup="listbox"
+                      aria-expanded={isDropdownOpen}
                     >
-                      {HERO_SERVICES.map((service) => (
-                        <option key={service} value={service}>
-                          {service}
-                        </option>
-                      ))}
-                    </select>
+                      <span className="flex items-center gap-2.5 truncate">
+                        {React.createElement(selectedService.icon, {
+                          className: 'w-4 h-4 text-[var(--accent-primary)] shrink-0',
+                          strokeWidth: 1.75
+                        })}
+                        <span className="truncate">{selectedService.name}</span>
+                      </span>
+                      <ChevronDown
+                        className={`w-4 h-4 text-[var(--ink-muted)] shrink-0 transition-transform duration-200 ${
+                          isDropdownOpen ? 'rotate-180 text-[var(--ink-primary)]' : ''
+                        }`}
+                      />
+                    </button>
+
+                    {/* Popover Menu with Floating Shadow and Clean Separation */}
+                    {isDropdownOpen && (
+                      <div
+                        role="listbox"
+                        className="absolute left-0 bottom-full md:bottom-auto md:top-full mb-2 md:mb-0 md:mt-2 w-full md:w-72 bg-[var(--surface-card)] border border-[var(--border-subtle)] rounded-xl shadow-xl py-1.5 z-50 max-h-72 overflow-y-auto animate-in fade-in zoom-in-95 duration-150"
+                      >
+                        <div className="px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[var(--ink-muted)] border-b border-[var(--border-subtle)]/60 mb-1">
+                          Select Service
+                        </div>
+                        {HERO_SERVICES.map((service) => {
+                          const IconComp = service.icon;
+                          const isSelected = selectedService.name === service.name;
+                          return (
+                            <button
+                              key={service.name}
+                              type="button"
+                              role="option"
+                              aria-selected={isSelected}
+                              onClick={() => {
+                                setSelectedService(service);
+                                setIsDropdownOpen(false);
+                              }}
+                              className={`w-full px-3 py-2 text-sm text-left flex items-center justify-between gap-2.5 transition-colors cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[var(--accent-primary-soft)] text-[var(--accent-primary)] font-medium'
+                                  : 'text-[var(--ink-primary)] hover:bg-[var(--surface-muted)]'
+                              }`}
+                            >
+                              <div className="flex items-center gap-2.5 truncate">
+                                <IconComp
+                                  className={`w-4 h-4 shrink-0 ${
+                                    isSelected ? 'text-[var(--accent-primary)]' : 'text-[var(--ink-muted)]'
+                                  }`}
+                                  strokeWidth={1.75}
+                                />
+                                <span className="truncate">{service.name}</span>
+                              </div>
+                              <span
+                                className={`text-[10px] px-1.5 py-0.5 rounded ${
+                                  isSelected
+                                    ? 'bg-[var(--accent-primary)] text-white'
+                                    : 'bg-[var(--surface-muted)] text-[var(--ink-muted)]'
+                                }`}
+                              >
+                                {service.badge}
+                              </span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
 
                   <div className="hidden md:block md:col-span-1 h-5 w-px bg-[var(--border-subtle)] mx-auto" />
 
-                  <div className="md:col-span-3 flex items-center h-10 px-3 rounded-lg border border-[var(--border-subtle)] md:border-transparent focus-within:border-[var(--border-strong)] bg-[var(--surface-canvas)] md:bg-transparent">
+                  <div className="md:col-span-3 flex items-center h-11 px-3 rounded-lg border border-[var(--border-subtle)] md:border-transparent focus-within:border-[var(--border-strong)] bg-[var(--surface-canvas)] md:bg-transparent">
                     <span className="text-sm font-medium text-[var(--ink-muted)] mr-2 tabular-nums select-none">
                       +91
                     </span>
@@ -384,12 +455,13 @@ export default function Hero({ onOpenBooking }) {
                     />
                   </div>
 
+                  {/* High-Converting Clear CTA Button */}
                   <div className="md:col-span-3">
                     <button
                       type="submit"
-                      className="w-full h-10 px-5 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.99] rounded-lg transition-[transform,background-color] cursor-pointer"
+                      className="w-full h-11 px-5 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.99] rounded-lg transition-[transform,background-color] cursor-pointer shadow-sm flex items-center justify-center gap-1.5"
                     >
-                      Contact us
+                      <span>Get Instant Quote</span>
                     </button>
                   </div>
                 </form>
