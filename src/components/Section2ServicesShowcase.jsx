@@ -133,49 +133,36 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
-          {/* Subheader & Controls */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[var(--ink-secondary)]">
-                Live Project Showcase
-              </span>
-              <span className="text-xs text-[var(--ink-muted)]">•</span>
-              <span className="text-xs text-[var(--ink-muted)]">
-                Verified photos from Vejalpur & West Ahmedabad
-              </span>
-            </div>
+          {/* Carousel Controls */}
+          <div className="flex items-center justify-end gap-2">
+            <button
+              type="button"
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="h-8 px-3 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-card)] text-xs font-medium text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] flex items-center gap-1.5 transition-colors cursor-pointer"
+              title={isPlaying ? 'Pause Autoplay' : 'Resume Autoplay'}
+            >
+              {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-emerald-600" />}
+              <span className="hidden sm:inline">{isPlaying ? 'Autoplaying' : 'Paused'}</span>
+            </button>
 
-            {/* Carousel Controls */}
-            <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="h-8 px-3 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-card)] text-xs font-medium text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] flex items-center gap-1.5 transition-colors cursor-pointer"
-                title={isPlaying ? 'Pause Autoplay' : 'Resume Autoplay'}
-              >
-                {isPlaying ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5 text-emerald-600" />}
-                <span className="hidden sm:inline">{isPlaying ? 'Autoplaying' : 'Paused'}</span>
-              </button>
+            <div className="h-4 w-px bg-[var(--border-subtle)] mx-1" />
 
-              <div className="h-4 w-px bg-[var(--border-subtle)] mx-1" />
-
-              <button
-                type="button"
-                onClick={handlePrev}
-                className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] flex items-center justify-center transition-colors cursor-pointer"
-                aria-label="Previous Project"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={handleNext}
-                className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] flex items-center justify-center transition-colors cursor-pointer"
-                aria-label="Next Project"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={handlePrev}
+              className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Previous Project"
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={handleNext}
+              className="w-8 h-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] flex items-center justify-center transition-colors cursor-pointer"
+              aria-label="Next Project"
+            >
+              <ChevronRight className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Featured Stage (Slider Card) */}
@@ -314,10 +301,6 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
         <div className="space-y-6 pt-6">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2">
             <div className="space-y-1.5 max-w-xl">
-              <div className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-primary)] uppercase tracking-wider">
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>Find Exactly What You Need</span>
-              </div>
               <h3 className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-[var(--ink-primary)]">
                 Instant Search & Certified Trade Directory
               </h3>
@@ -512,7 +495,6 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
           </div>
           )}
         </div>
-
       </div>
     </section>
   );
