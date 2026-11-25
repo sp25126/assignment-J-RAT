@@ -30,7 +30,7 @@ export default function BeforeAfterSlider({ onOpenBooking }) {
       <div className="max-w-[1280px] mx-auto px-4 sm:px-8 space-y-10 sm:space-y-12">
         
         {/* ========================================================
-            HEADER & TAB NAVIGATION (Clear visual hierarchy)
+            HEADER
            ======================================================== */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-[var(--border-subtle)]">
           <div className="space-y-2.5">
@@ -39,40 +39,17 @@ export default function BeforeAfterSlider({ onOpenBooking }) {
             </h2>
 
             <p className="text-sm sm:text-base text-[var(--ink-secondary)] max-w-2xl leading-relaxed">
-              Drag the interactive slider across real completed residences in Vejalpur, Prahlad Nagar, and Satellite to inspect our structural and aesthetic workmanship.
+              Drag the interactive slider across this master renovation in Vejalpur, Ahmedabad to inspect our concealed structural plumbing and precision surface tile finish.
             </p>
           </div>
 
-          {/* Project Switcher Pills */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 max-w-full">
-            {BEFORE_AFTER_ITEMS.map((item, idx) => {
-              const isSelected = activeProjectIdx === idx;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => {
-                    setActiveProjectIdx(idx);
-                    setSliderPos(50);
-                  }}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-medium transition-all cursor-pointer whitespace-nowrap border flex items-center gap-2 ${
-                    isSelected
-                      ? 'bg-[var(--surface-card)] border-[var(--accent-primary)] text-[var(--ink-primary)] shadow-sm font-semibold'
-                      : 'bg-[var(--surface-card)]/60 border-[var(--border-subtle)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-card)]'
-                  }`}
-                >
-                  <span
-                    className={`w-2 h-2 rounded-full ${
-                      isSelected ? 'bg-[var(--accent-primary)]' : 'bg-[var(--border-strong)]'
-                    }`}
-                  />
-                  <span>Project 0{idx + 1}</span>
-                  <span className="text-[11px] text-[var(--ink-muted)] hidden sm:inline">
-                    ({item.category.split('&')[0].trim()})
-                  </span>
-                </button>
-              );
-            })}
+          {/* Single Verified Badge */}
+          <div className="flex items-center gap-2">
+            <div className="px-3.5 py-2 rounded-xl bg-[var(--surface-card)] border border-[var(--border-subtle)] text-xs font-medium text-[var(--ink-primary)] shadow-sm flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="font-semibold">Vejalpur Villa Project</span>
+              <span className="text-[var(--ink-muted)]">Master Bathroom Handover</span>
+            </div>
           </div>
         </div>
 
