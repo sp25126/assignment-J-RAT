@@ -401,26 +401,6 @@ export default function Hero({ onOpenBooking }) {
             </div>
           </div>
 
-          {/* Bottom Floating Room Caption Card */}
-          <div className="pointer-events-auto flex items-end justify-start">
-            <div className="bg-[var(--surface-card)]/92 backdrop-blur-md border border-[var(--border-subtle)] rounded-xl p-4 max-w-md shadow-xs">
-              <div className="flex items-center justify-between gap-4 mb-1">
-                <h2 className="text-base sm:text-lg font-semibold text-[var(--ink-primary)]">
-                  {activeStage.title}
-                </h2>
-                <button
-                  type="button"
-                  onClick={() => onOpenBooking({ name: activeStage.label })}
-                  className="text-xs text-[var(--accent-primary)] font-medium hover:underline cursor-pointer shrink-0"
-                >
-                  Enquire
-                </button>
-              </div>
-              <p className="text-xs sm:text-sm text-[var(--ink-secondary)] leading-relaxed">
-                {activeStage.subtitle}
-              </p>
-            </div>
-          </div>
         </div>
       </div>
     </section>
