@@ -21,6 +21,22 @@ export default function BookingModal({ isOpen, onClose, preselectedService, area
       alert('Please enter a valid 10-digit mobile number.');
       return;
     }
+    try {
+      const existing = JSON.parse(localStorage.getItem('homehancer_leads_crm') || '[]');
+      const newLead = {
+        id: `LEAD-${Date.now().toString().slice(-4)}`,
+        customer: 'Website Homeowner',
+        phone: phone,
+        service: currentService.name,
+        area: selectedArea,
+        time: new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }),
+        status: 'Pending',
+        technician: 'Unassigned'
+      };
+      localStorage.setItem('homehancer_leads_crm', JSON.stringify([newLead, ...existing]));
+    } catch (err) {
+      console.error(err);
+    }
     setSubmitted(true);
   };
 

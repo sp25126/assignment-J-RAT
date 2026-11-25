@@ -255,6 +255,22 @@ export default function Hero({ onOpenBooking }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (phone.length < 10) return;
+    try {
+      const existing = JSON.parse(localStorage.getItem('homehancer_leads_crm') || '[]');
+      const newLead = {
+        id: `LEAD-${Date.now().toString().slice(-4)}`,
+        customer: 'Hero Fast Quote',
+        phone: phone,
+        service: selectedService.name,
+        area: 'Vejalpur / West Ahmedabad',
+        time: new Date().toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' }),
+        status: 'Pending',
+        technician: 'Unassigned'
+      };
+      localStorage.setItem('homehancer_leads_crm', JSON.stringify([newLead, ...existing]));
+    } catch (err) {
+      console.error(err);
+    }
     setSubmitted(true);
   };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Phone, MapPin, Clock, MessageCircle, ShieldCheck, ArrowUpRight } from 'lucide-react';
 
-export default function Footer({ onOpenBooking }) {
+export default function Footer({ onOpenBooking, onOpenAdmin }) {
   return (
     <footer id="contact-footer" className="bg-[var(--surface-dark)] text-slate-300 pt-16 pb-24 lg:pb-16 px-4 sm:px-8 border-t border-slate-800">
       <div className="max-w-[1280px] mx-auto space-y-12">
@@ -113,13 +113,24 @@ export default function Footer({ onOpenBooking }) {
           </div>
         </div>
 
-        {/* Quiet Legal & Copyright Bottom Strip */}
+        {/* Quiet Legal & Copyright Bottom Strip with Admin Gateway */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <div>
             © 2026 Home Hancer Services Pvt Ltd. All rights reserved.
           </div>
           <div className="flex items-center gap-4">
             <span>Property Maintenance & Renovation</span>
+            <span>•</span>
+            <a
+              href="#admin"
+              onClick={(e) => {
+                e.preventDefault();
+                onOpenAdmin && onOpenAdmin();
+              }}
+              className="text-slate-400 hover:text-white transition-colors underline decoration-slate-600 underline-offset-2 cursor-pointer font-medium"
+            >
+              Operations CMS / Backend
+            </a>
             <span>•</span>
             <span>Vejalpur & West Ahmedabad</span>
           </div>

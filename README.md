@@ -1,6 +1,26 @@
-# Home Hancer Services — Production Web Application
+# Home Hancer Services — Production Web Application & Operations CMS
 
-> High-performance, SEO-optimized property maintenance & turnkey architectural renovation platform for **Home Hancer Services Pvt Ltd** (Vejalpur, Ahmedabad).
+> Built for the **JRAT's Studio Hiring Assessment: Practical Assessment — Vibe Coder (Junior Web Developer)**  
+> **Option Selected:** `02 WEBSITE REDESIGN — Home Hancer Services` (Vejalpur, Ahmedabad)
+
+---
+
+## 📋 Assessment Final Deliverables Checklist
+
+| Deliverable | Requirement | Status | Access Details |
+| :--- | :--- | :---: | :--- |
+| **01. Live Website** | Deployed & accessible through a shareable URL (Mandatory) | ✅ **Live** | [**Live URL: https://sp25126.github.io/assignment-J-RAT/**](https://sp25126.github.io/assignment-J-RAT/) |
+| **02. CMS / Backend** | Background CMS or backend with access & configuration | ✅ **Complete** | **Access URL:** [**Live Website /#admin**](https://sp25126.github.io/assignment-J-RAT/#admin)<br>• **Email:** `admin@homehancer.in`<br>• **Password:** `admin123`<br>*(Includes 1-click Auto-Fill button on login)* |
+| **03. Project Handover** | Accessible, reviewed, and run after submission | ✅ **Ready** | Full source on GitHub `sp25126/assignment-J-RAT`, zero build warnings, comprehensive docs below. |
+
+---
+
+## 🛠️ CMS & Backend Capabilities (Deliverable 02)
+Accessible at `/#admin` or via the **"Operations CMS / Backend"** link in the footer:
+1. **Overview Telemetry:** Real-time metrics for total inquiries handled, 42-minute average arrival SLA, active catalog tariffs, and Google 4.9★ rating.
+2. **Service Catalog & Tariff Manager (CRUD):** Directly update starting prices (e.g., ₹149, ₹499), arrival time SLAs, and service descriptions. Changes persist to `localStorage` and immediately update the live customer landing page.
+3. **Inquiries & Leads Dispatch CRM:** Track incoming leads submitted from the Hero enquiry bar or Booking Modal, complete with customer phone, service requested, locality, and status toggle (`Pending` ➔ `Assigned` ➔ `Completed`).
+4. **Data Backup & Export:** One-click JSON backup export and factory reset functionality.
 
 ---
 
