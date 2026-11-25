@@ -1,5 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Star, MapPin, Phone, Check, ArrowDown, ChevronDown, Wrench, Snowflake, Bath, Droplets, Zap, Hammer, Paintbrush, ShieldCheck, Utensils, Grid } from 'lucide-react';
+import { 
+  Star, MapPin, Phone, Check, ArrowDown, ChevronDown, 
+  Wrench, Snowflake, Bath, Droplets, Zap, Hammer, 
+  Paintbrush, ShieldCheck, Utensils, Grid, ArrowRight, MessageCircle 
+} from 'lucide-react';
 
 const HERO_SERVICES = [
   { name: 'Air Conditioning', icon: Snowflake, badge: 'Popular' },
@@ -455,29 +459,107 @@ export default function Hero({ onOpenBooking }) {
                     />
                   </div>
 
-                  {/* High-Converting Clear CTA Button (tall-mayfly-60 style) */}
+                  {/* High-Converting Clear CTA Button */}
                   <div className="md:col-span-3">
                     <button
                       type="submit"
-                      className="mayfly-btn w-full h-11 px-5 text-sm"
+                      className="w-full h-11 px-5 text-sm font-semibold text-white bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.98] rounded-xl shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer group"
                     >
-                      <span className="btn-txt flex items-center justify-center gap-1.5">
-                        <span>Get Instant Quote</span>
-                      </span>
+                      <span>Get Instant Quote</span>
+                      <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </button>
                   </div>
                 </form>
               )}
 
-              {/* Operating Hours & Availability Trust Row */}
-              <div className="mt-3.5 flex items-center justify-center text-xs sm:text-sm">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--surface-card)]/80 backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-secondary)] shadow-[0_1px_3px_rgba(15,23,42,0.03)]">
+              {/* Quick Actions & Operating Hours Trust Row */}
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm">
+                <button
+                  type="button"
+                  onClick={() => onOpenBooking && onOpenBooking()}
+                  className="h-9 px-4 rounded-xl text-xs font-semibold text-[var(--ink-primary)] bg-[var(--surface-card)] hover:bg-white backdrop-blur-md border border-[var(--border-subtle)] hover:border-[var(--border-strong)] transition-all flex items-center gap-1.5 shadow-xs cursor-pointer active:scale-95"
+                >
+                  <Wrench className="w-3.5 h-3.5 text-[var(--accent-primary)]" />
+                  <span>Book Free Inspection</span>
+                </button>
+
+                <a
+                  href={`https://wa.me/919157691572?text=${encodeURIComponent(
+                    'Hello Home Hancer, I want to inquire about home maintenance and renovation services in Ahmedabad.'
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="h-9 px-4 rounded-xl text-xs font-semibold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 backdrop-blur-md border border-emerald-200 transition-all flex items-center gap-1.5 shadow-xs active:scale-95"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-emerald-600 fill-emerald-600/20" />
+                  <span>WhatsApp Desk</span>
+                </a>
+
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-[var(--surface-card)]/80 backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-secondary)] shadow-xs">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
-                  <span className="font-medium text-[var(--ink-primary)]">Operating Hours:</span>
-                  <span>Monday to Saturday, 9am to 8pm</span>
+                  <span className="font-medium text-[var(--ink-primary)] text-xs">Mon–Sat, 9am–8pm</span>
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Bottom Stage Switcher Dock & Room Info */}
+          <div className="pointer-events-auto w-full max-w-4xl mx-auto pb-2 sm:pb-4">
+            {isIntroVisible ? (
+              <div className="flex items-center justify-center gap-1.5 sm:gap-2 overflow-x-auto p-1.5 rounded-2xl bg-[var(--surface-card)]/90 backdrop-blur-md border border-[var(--border-subtle)] shadow-md mx-auto w-fit max-w-full">
+                {STAGES.map((stg, idx) => {
+                  const isActive = activeStageIdx === idx;
+                  return (
+                    <button
+                      key={stg.id}
+                      type="button"
+                      onClick={() => jumpToStage(idx)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-medium whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                        isActive
+                          ? 'bg-[var(--accent-primary)] text-white font-semibold shadow-xs'
+                          : 'text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-muted)]'
+                      }`}
+                    >
+                      <span>{stg.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="bg-[var(--surface-card)]/95 backdrop-blur-md border border-[var(--border-subtle)] rounded-2xl p-4 sm:px-6 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                <div className="text-center sm:text-left space-y-0.5">
+                  <div className="text-xs font-semibold text-[var(--accent-primary)] font-mono">
+                    Stage 0{activeStageIdx + 1} · {activeStage.label}
+                  </div>
+                  <h3 className="text-base font-bold text-[var(--ink-primary)]">
+                    {activeStage.title}
+                  </h3>
+                  <p className="text-xs text-[var(--ink-secondary)] max-w-lg">
+                    {activeStage.subtitle}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => onOpenBooking && onOpenBooking(activeStage.id)}
+                    className="h-10 px-5 rounded-xl bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-sm cursor-pointer"
+                  >
+                    <span>Book This Service</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => jumpToStage(0)}
+                    className="h-10 px-3.5 rounded-xl bg-[var(--surface-muted)] hover:bg-[var(--border-subtle)] text-[var(--ink-secondary)] text-xs font-medium transition-colors border border-[var(--border-subtle)] cursor-pointer"
+                    title="Back to top overview"
+                  >
+                    Overview
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
 
         </div>
