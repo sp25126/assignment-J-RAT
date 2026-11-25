@@ -132,20 +132,22 @@ export default function Hero({ onOpenBooking }) {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
 
-    const drawContainImage = (img, alpha, zoom, panX, panY, w, h) => {
+    const drawHeroImage = (img, alpha, zoom, panX, panY, w, h) => {
       if (!img || !img.complete || img.naturalWidth === 0) return;
       ctx.save();
       ctx.globalAlpha = alpha;
 
       const isMobile = w < 768;
-      const effectiveZoom = isMobile ? Math.min(zoom, 1.02) : zoom;
-      const scale = Math.min(w / img.naturalWidth, h / img.naturalHeight) * effectiveZoom;
+      // Desktop: cover so there are zero side margins; Mobile: contain + centered so full house fits
+      const scale = isMobile
+        ? Math.min(w / img.naturalWidth, h / img.naturalHeight) * 1.15
+        : Math.max(w / img.naturalWidth, h / img.naturalHeight) * zoom;
 
       const drawW = img.naturalWidth * scale;
       const drawH = img.naturalHeight * scale;
 
       const dx = (w - drawW) / 2 + panX * w;
-      const dy = (h - drawH) / 2 + (isMobile ? panY * 0.5 : panY) * h;
+      const dy = isMobile ? (h - drawH) / 2 : (h - drawH) / 2 + panY * h;
       ctx.drawImage(img, dx, dy, drawW, drawH);
       ctx.restore();
     };
@@ -196,10 +198,10 @@ export default function Hero({ onOpenBooking }) {
       const w = rect.width;
       const h = rect.height;
 
-      ctx.fillStyle = '#f8fafc';
+      ctx.fillStyle = '#e9ecf3';
       ctx.fillRect(0, 0, w, h);
 
-      // Draw current & next keyframes with contain framing so all technicians stay visible
+      // Draw current & next keyframes
       const currImg = imagesRef.current[idx];
       const nextImg = imagesRef.current[nextIdx];
 
@@ -208,10 +210,10 @@ export default function Hero({ onOpenBooking }) {
       const interpPanY = currStage.panY + (nextStage.panY - currStage.panY) * blend;
 
       if (currImg && currImg.complete && currImg.naturalWidth > 0) {
-        drawContainImage(currImg, 1 - blend * 0.85, interpZoom, interpPanX, interpPanY, w, h);
+        drawHeroImage(currImg, 1 - blend * 0.85, interpZoom, interpPanX, interpPanY, w, h);
       }
       if (blend > 0.01 && nextImg && nextImg.complete && nextImg.naturalWidth > 0) {
-        drawContainImage(nextImg, blend, interpZoom, interpPanX, interpPanY, w, h);
+        drawHeroImage(nextImg, blend, interpZoom, interpPanX, interpPanY, w, h);
       }
     };
 
