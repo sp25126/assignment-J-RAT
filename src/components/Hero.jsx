@@ -214,9 +214,9 @@ export default function Hero({ onOpenBooking }) {
 
             <div className="relative flex justify-center">
               <img
-                src="/assets/3d-house-cross-section.png"
-                alt="3D architectural house cross-section showing bathroom, bedroom air conditioning, office, living room, laundry, and kitchen"
-                className="w-full max-w-2xl h-auto object-contain block mx-auto"
+                src="/assets/hero-villa-exploded.png"
+                alt="Exploded 3D isometric architectural villa showing rooftop AC unit, bathroom, office, living room, kitchen, and laundry utility"
+                className="w-full max-w-3xl h-auto object-contain block mx-auto"
               />
             </div>
           </div>

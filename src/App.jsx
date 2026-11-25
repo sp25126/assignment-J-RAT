@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import ThreeDHouseExperience from './components/ThreeDHouseExperience';
+import ExplodedHouse3D from './components/ExplodedHouse3D';
 import ServicesHub from './components/ServicesHub';
 import BeforeAfterSlider from './components/BeforeAfterSlider';
 import ReviewsSection from './components/ReviewsSection';
@@ -45,8 +45,8 @@ export default function App() {
           onBookSuccess={(details) => handleOpenBooking({ name: details.service })}
         />
 
-        {/* 3. True 3D House Cross-Section Experience with WebGL Camera Zoom */}
-        <ThreeDHouseExperience
+        {/* 3. Blender 5.2 Exploded 3D House with Scroll & Room Camera Zoom */}
+        <ExplodedHouse3D
           onOpenBooking={(service) => handleOpenBooking(service)}
         />
 
