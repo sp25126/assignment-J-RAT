@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import RealProjectsCarousel from './components/RealProjectsCarousel';
-import ServicesHub from './components/ServicesHub';
+import Section2ServicesShowcase from './components/Section2ServicesShowcase';
 import BeforeAfterSlider from './components/BeforeAfterSlider';
 import ReviewsSection from './components/ReviewsSection';
 import PreFooterCTA from './components/PreFooterCTA';
@@ -45,13 +44,9 @@ export default function App() {
           onBookSuccess={(details) => handleOpenBooking({ name: details.service })}
         />
 
-        {/* 2. Section 2: Real Site Assets in Autoplaying Carousel View */}
-        <RealProjectsCarousel
+        {/* 2. Section 2: Catalog Specialties, Real Proof Carousel & Services Catalog */}
+        <Section2ServicesShowcase
           onOpenBooking={(service) => handleOpenBooking(service)}
-        />
-
-        {/* 4. Complete Services Catalog */}
-        <ServicesHub
           onSelectService={(service) => handleOpenBooking(service)}
         />
 
