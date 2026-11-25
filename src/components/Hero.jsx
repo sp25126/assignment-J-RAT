@@ -147,7 +147,7 @@ export default function Hero({ onOpenBooking }) {
       const drawH = img.naturalHeight * scale;
 
       const dx = (w - drawW) / 2 + panX * w;
-      const dy = isMobile ? Math.max(h * 0.56, h - drawH - 72) : (h - drawH) / 2 + panY * h;
+      const dy = isMobile ? (h - drawH) / 2 : (h - drawH) / 2 + panY * h;
       ctx.drawImage(img, dx, dy, drawW, drawH);
       ctx.restore();
     };
@@ -260,8 +260,8 @@ export default function Hero({ onOpenBooking }) {
 
         {/* Soft Top Gradient Scrim so Hero Text stays 100% legible */}
         <div
-          className={`absolute inset-x-0 top-0 h-80 md:h-72 bg-gradient-to-b from-[#e9ecf3] via-[#e9ecf3]/85 md:from-[var(--surface-canvas)]/95 md:via-[var(--surface-canvas)]/75 to-transparent pointer-events-none transition-opacity duration-500 ${
-            isIntroVisible ? 'opacity-100' : 'opacity-40'
+          className={`absolute inset-x-0 top-0 h-96 bg-gradient-to-b from-[var(--surface-canvas)] via-[var(--surface-canvas)]/85 to-transparent pointer-events-none transition-opacity duration-500 ${
+            isIntroVisible ? 'opacity-100' : 'opacity-30'
           }`}
         />
 
@@ -275,24 +275,30 @@ export default function Hero({ onOpenBooking }) {
                 : 'opacity-0 -translate-y-4 pointer-events-none'
             }`}
           >
-            <div className="max-w-3xl mx-auto text-center space-y-3">
-              <div className="inline-flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-[var(--ink-secondary)]">
-                <span className="inline-flex items-center gap-1.5">
-                  <Star className="w-4 h-4 text-[var(--ink-primary)]" strokeWidth={1.5} />
-                  <span className="font-medium text-[var(--ink-primary)] tabular-nums">4.8 / 5</span>
-                  <span>from 353+ Google reviews</span>
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <MapPin className="w-4 h-4 text-[var(--ink-muted)]" strokeWidth={1.5} />
-                  <span>Vejalpur, Ahmedabad</span>
-                </span>
+            <div className="max-w-3xl mx-auto text-center space-y-3.5">
+              {/* Trust & Locality Pill */}
+              <div className="inline-flex items-center justify-center">
+                <div className="inline-flex flex-wrap items-center justify-center gap-2.5 sm:gap-4 px-3.5 py-1.5 rounded-full bg-[var(--surface-card)]/90 backdrop-blur-md border border-[var(--border-subtle)] shadow-[0_2px_8px_rgba(15,23,42,0.04)] text-xs sm:text-sm text-[var(--ink-secondary)]">
+                  <span className="inline-flex items-center gap-1.5 font-medium text-[var(--ink-primary)]">
+                    <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" strokeWidth={1} />
+                    <span className="tabular-nums">4.8 / 5</span>
+                    <span className="font-normal text-[var(--ink-secondary)]">from 353+ Google reviews</span>
+                  </span>
+                  <span className="hidden sm:inline w-1 h-1 rounded-full bg-[var(--border-strong)]" aria-hidden="true" />
+                  <span className="inline-flex items-center gap-1.5 font-medium text-[var(--ink-secondary)]">
+                    <MapPin className="w-3.5 h-3.5 text-[var(--ink-muted)]" strokeWidth={1.5} />
+                    <span>Vejalpur, Ahmedabad</span>
+                  </span>
+                </div>
               </div>
 
+              {/* Heading strictly untouched */}
               <h1 className="text-2xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] leading-[1.1] text-[var(--ink-primary)]">
                 Property maintenance and renovation in Ahmedabad
               </h1>
 
-              <p className="text-sm sm:text-base text-[var(--ink-secondary)] leading-relaxed max-w-2xl mx-auto">
+              {/* Elevated Subheading: high contrast, comfortable reading width, crisp typography */}
+              <p className="text-sm sm:text-base md:text-[17px] text-[var(--ink-secondary)] leading-relaxed max-w-2xl mx-auto font-normal text-balance">
                 Home Hancer Services is your premier partner for exceptional property maintenance and renovation in Ahmedabad.
               </p>
             </div>
@@ -389,15 +395,20 @@ export default function Hero({ onOpenBooking }) {
                 </form>
               )}
 
-              <div className="mt-2.5 flex flex-wrap items-center justify-center gap-5 text-xs sm:text-sm text-[var(--ink-secondary)]">
+              {/* Contact Details & Operating Hours - Clean, Tasteful Trust Row */}
+              <div className="mt-3.5 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm">
                 <a
                   href="tel:9157691572"
-                  className="inline-flex items-center gap-1.5 hover:text-[var(--ink-primary)] transition-colors tabular-nums"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--surface-card)]/80 hover:bg-[var(--surface-card)] backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-primary)] font-medium tabular-nums transition-all hover:border-[var(--border-strong)] shadow-[0_1px_3px_rgba(15,23,42,0.03)]"
                 >
-                  <Phone className="w-3.5 h-3.5 text-[var(--ink-muted)]" strokeWidth={1.5} />
+                  <Phone className="w-3.5 h-3.5 text-[var(--accent-primary)]" strokeWidth={1.75} />
                   <span>9157691572</span>
                 </a>
-                <span className="text-[var(--ink-muted)]">Monday to Saturday, 9am to 8pm</span>
+                <span className="hidden sm:inline text-[var(--border-strong)]" aria-hidden="true">•</span>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--surface-card)]/80 backdrop-blur-sm border border-[var(--border-subtle)] text-[var(--ink-secondary)] shadow-[0_1px_3px_rgba(15,23,42,0.03)]">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" aria-hidden="true" />
+                  <span>Monday to Saturday, 9am to 8pm</span>
+                </div>
               </div>
             </div>
           </div>
