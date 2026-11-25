@@ -15,7 +15,7 @@ export default function Footer({ onOpenBooking }) {
               <div>
                 <span className="font-extrabold text-lg text-white font-display tracking-tight">HOME HANCER</span>
                 <span className="text-[10px] bg-white/10 text-white/80 font-mono px-1.5 py-0.5 rounded ml-2">SERVICES</span>
-                <p className="text-[10px] text-[#a0a4b0] font-mono">PVT LTD // AHMEDABAD</p>
+                <p className="text-xs text-[var(--ink-muted)]">Pvt Ltd • Ahmedabad</p>
               </div>
             </div>
 

@@ -34,11 +34,6 @@ export default function BeforeAfterSlider({ onOpenBooking }) {
            ======================================================== */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-8 border-b border-[var(--border-subtle)]">
           <div className="space-y-2.5">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--surface-card)] text-xs font-mono font-medium text-[var(--accent-primary)] border border-[var(--border-subtle)] shadow-[0_1px_2px_rgba(15,23,42,0.03)]">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>REAL TRANSFORMATIONS // AHMEDABAD PORTFOLIO</span>
-            </div>
-
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-[-0.03em] leading-[1.1] text-[var(--ink-primary)]">
               Before vs. After Craftsmanship
             </h2>

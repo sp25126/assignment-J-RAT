@@ -37,9 +37,6 @@ export default function BookingModal({ isOpen, onClose, preselectedService, area
         {/* Header */}
         <div className="p-5 border-b border-white/10 flex items-center justify-between bg-[#1a1c21]">
           <div>
-            <span className="text-[10px] font-mono text-[#ccff00] uppercase tracking-wider block">
-              BOOKING // AHMEDABAD DISPATCH
-            </span>
             <h3 className="text-lg font-bold text-white font-display">Schedule Technician Visit</h3>
           </div>
           <button

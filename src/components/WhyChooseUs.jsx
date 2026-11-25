@@ -41,9 +41,6 @@ export default function WhyChooseUs() {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-white/10">
           <div>
-            <div className="text-[11px] font-mono text-[#ccff00] uppercase tracking-wider mb-2">
-              SERVICE PROTOCOL // THE HOME HANCER STANDARD
-            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
               Why Ahmedabad Trusts Home Hancer
             </h2>

@@ -30,9 +30,6 @@ export default function ServicesHub({ onSelectService }) {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-10 border-b border-[#e5e3dc]">
           <div>
-            <div className="text-[11px] font-mono font-bold text-[#121316] uppercase tracking-wider mb-2">
-              CATALOG // AHMEDABAD CERTIFIED SPECIALTIES
-            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#121316] tracking-tight font-display">
               Engineered Home Services & Repairs
             </h2>

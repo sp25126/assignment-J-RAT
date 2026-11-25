@@ -10,9 +10,6 @@ export default function FAQSection() {
       <div className="max-w-4xl mx-auto">
         {/* Section Header */}
         <div className="text-center pb-12">
-          <div className="text-[11px] font-mono text-[#ccff00] uppercase tracking-wider mb-2">
-            FREQUENT QUESTIONS // OPERATIONAL PROTOCOL
-          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-display">
             Clear Answers Before You Book
           </h2>
