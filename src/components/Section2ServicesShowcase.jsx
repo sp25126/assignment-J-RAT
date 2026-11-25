@@ -2,10 +2,20 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ChevronLeft, ChevronRight, Play, Pause, MapPin, ShieldCheck, 
   ArrowRight, Clock, CheckCircle2, MessageCircle, Droplets, 
-  Snowflake, Zap, Hammer, Paintbrush, Bath, Sparkles, SlidersHorizontal
+  Snowflake, Zap, Hammer, Paintbrush, Bath, Sparkles, SlidersHorizontal,
+  Search, X, Flame
 } from 'lucide-react';
 import { REAL_GALLERY } from '../data/galleryData';
 import { POPULAR_SERVICES, SERVICE_CATEGORIES } from '../data/servicesData';
+
+const BEST_RECOMMENDATIONS = [
+  { label: 'Tap Leakage', query: 'tap' },
+  { label: 'AC Jet Wash', query: 'ac' },
+  { label: 'Switchboard Wiring', query: 'switch' },
+  { label: 'Modular Kitchen', query: 'kitchen' },
+  { label: 'Wall Dampness', query: 'waterproofing' },
+  { label: 'Bathroom Tiles', query: 'bath' }
+];
 
 export default function Section2ServicesShowcase({ onOpenBooking, onSelectService }) {
   // Carousel State
@@ -15,7 +25,8 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
   const touchStartXRef = useRef(null);
   const touchEndXRef = useRef(null);
 
-  // Catalog State
+  // Search & Filter State
+  const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
 
   // Autoplay Timer (4.5s)
@@ -52,9 +63,19 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
 
   const activeProject = REAL_GALLERY[currentSlide];
 
-  const filteredServices = activeCategory === 'all'
-    ? POPULAR_SERVICES
-    : POPULAR_SERVICES.filter((s) => s.category === activeCategory);
+  // Combined Search & Category Filter
+  const filteredServices = POPULAR_SERVICES.filter((s) => {
+    const matchesCategory = activeCategory === 'all' || s.category === activeCategory;
+    if (!matchesCategory) return false;
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase();
+    return (
+      s.name.toLowerCase().includes(q) ||
+      s.description.toLowerCase().includes(q) ||
+      s.category.toLowerCase().includes(q) ||
+      (s.features && s.features.some((f) => f.toLowerCase().includes(q)))
+    );
+  });
 
   const getCategoryIcon = (category) => {
     switch (category) {
@@ -293,21 +314,97 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
         </div>
 
         {/* ========================================================
-            PART 3: FILTERABLE SERVICES CATALOG (SPICY RAT 83 CARDS)
+            PART 3: SEARCH & EXPLORE CATALOG (HIGH READABILITY & RECCOMENDATIONS)
             Structured Pricing & Transparent Same-Day Booking
            ======================================================== */}
         <div className="space-y-6 pt-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h3 className="text-xl sm:text-2xl font-semibold tracking-[-0.02em] text-[var(--ink-primary)]">
-                Select Your Service Category
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-2">
+            <div className="space-y-1.5 max-w-xl">
+              <div className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--accent-primary)] uppercase tracking-wider">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>Find Exactly What You Need</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-semibold tracking-[-0.02em] text-[var(--ink-primary)]">
+                Instant Search & Certified Trade Directory
               </h3>
               <p className="text-xs sm:text-sm text-[var(--ink-secondary)]">
-                Instant dispatch available across all 15 Ahmedabad zones with diagnostic equipment.
+                Search repairs by problem (e.g., tap leak, AC cooling, switchboard, dampness) or click quick recommendations.
               </p>
             </div>
 
-            {/* Category Filter Tabs */}
+            {/* Smart Search Bar */}
+            <div className="w-full lg:w-96 relative">
+              <label htmlFor="service-search-input" className="sr-only">
+                Search services and repairs
+              </label>
+              <div className="relative flex items-center">
+                <Search className="w-4 h-4 text-[var(--ink-muted)] absolute left-3.5 pointer-events-none" />
+                <input
+                  id="service-search-input"
+                  type="text"
+                  placeholder="Search repairs (e.g. tap, ac jet, tiles)..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full h-11 pl-10 pr-9 rounded-xl bg-[var(--surface-card)] border border-[var(--border-subtle)] focus:border-[var(--accent-primary)] text-sm text-[var(--ink-primary)] placeholder:text-[var(--ink-muted)] focus:outline-none transition-colors shadow-sm"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="absolute right-3 p-1 rounded-full text-[var(--ink-muted)] hover:text-[var(--ink-primary)] cursor-pointer"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Recommendations & Category Filter Pills */}
+          <div className="space-y-3 pt-1">
+            {/* Top Recommendations Row */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-medium text-[var(--ink-muted)] flex items-center gap-1 shrink-0">
+                <Flame className="w-3.5 h-3.5 text-amber-500" />
+                <span>Popular Searches:</span>
+              </span>
+              {BEST_RECOMMENDATIONS.map((rec) => {
+                const isSelected = searchQuery.toLowerCase() === rec.query.toLowerCase();
+                return (
+                  <button
+                    key={rec.label}
+                    type="button"
+                    onClick={() => {
+                      if (isSelected) {
+                        setSearchQuery('');
+                      } else {
+                        setSearchQuery(rec.query);
+                        setActiveCategory('all');
+                      }
+                    }}
+                    className={`px-2.5 py-1 rounded-full text-xs transition-colors cursor-pointer border ${
+                      isSelected
+                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] font-medium shadow-sm'
+                        : 'bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] hover:border-[var(--border-strong)] border-[var(--border-subtle)]'
+                    }`}
+                  >
+                    {rec.label}
+                  </button>
+                );
+              })}
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="text-xs text-[var(--accent-primary)] hover:underline ml-1 cursor-pointer font-medium"
+                >
+                  Reset
+                </button>
+              )}
+            </div>
+
+            {/* Standard Category Tabs */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 max-w-full">
               {SERVICE_CATEGORIES.map((cat) => {
                 const isActive = activeCategory === cat.id;
@@ -318,8 +415,8 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
                     onClick={() => setActiveCategory(cat.id)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors cursor-pointer border ${
                       isActive
-                        ? 'bg-[var(--accent-primary)] text-white border-[var(--accent-primary)] shadow-sm'
-                        : 'bg-[var(--surface-card)] text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] border-[var(--border-subtle)] hover:bg-[var(--surface-muted)]'
+                        ? 'bg-[var(--surface-card)] text-[var(--accent-primary)] border-[var(--accent-primary)] font-semibold shadow-sm'
+                        : 'bg-[var(--surface-card)]/70 text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] border-[var(--border-subtle)] hover:bg-[var(--surface-card)]'
                     }`}
                   >
                     {cat.name}
@@ -330,7 +427,24 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
           </div>
 
           {/* Cards Grid with Spicy Rat 83 Inset Border Animation */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {filteredServices.length === 0 ? (
+            <div className="p-12 text-center rounded-2xl bg-[var(--surface-card)] border border-[var(--border-subtle)] space-y-3">
+              <p className="text-sm text-[var(--ink-secondary)]">
+                No services found matching "<span className="font-semibold text-[var(--ink-primary)]">{searchQuery}</span>".
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setSearchQuery('');
+                  setActiveCategory('all');
+                }}
+                className="px-4 py-2 rounded-lg bg-[var(--accent-primary)] text-white text-xs font-medium cursor-pointer"
+              >
+                View all available services
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {filteredServices.map((service) => (
               <div
                 key={service.id}
@@ -402,6 +516,7 @@ export default function Section2ServicesShowcase({ onOpenBooking, onSelectServic
               </div>
             ))}
           </div>
+          )}
         </div>
 
       </div>
