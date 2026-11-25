@@ -3,7 +3,7 @@ import { Phone, MapPin, Clock, MessageCircle, ShieldCheck } from 'lucide-react';
 
 export default function Footer({ onOpenBooking }) {
   return (
-    <footer className="bg-[#0b0c0e] text-[#f6f5f0] pt-16 pb-24 lg:pb-16 px-4 sm:px-8 border-t border-white/10">
+    <footer id="contact-footer" className="bg-[#0b0c0e] text-[#f6f5f0] pt-16 pb-24 lg:pb-16 px-4 sm:px-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-white/10">
           {/* Brand Column (5 Cols) */}

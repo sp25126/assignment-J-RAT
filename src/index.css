@@ -1,59 +1,49 @@
-/* Hallmark & Unslop Design System Tokens */
+/* Hallmark · v2.0.0 · shape: scene-hero · theme: slate-cobalt */
+/* Critique: Removed neon/dark-tech slop, uppercase tracked eyebrows, middle-dot strings, and nested cards; restored exact copy in a quiet neutral ramp with one cobalt accent. */
 @import "tailwindcss";
 
 :root {
-  /* Surface Palette (Industrial Asphalt & Felt Paper) */
-  --surface-canvas: #f6f5f0;
+  /* Neutral Surface Ramp (Cool Stone / Slate) */
+  --surface-canvas: #f8fafc;
   --surface-card: #ffffff;
-  --surface-dark: #121316;
-  --surface-dark-elevated: #1a1c21;
-  --surface-dark-card: #22252b;
-  --surface-muted: #eeece5;
-  
-  /* Brand Accent: High-Visibility Safety Lime (Halden Inspired) */
-  --accent-lime: #ccff00;
-  --accent-lime-hover: #b8e600;
-  --accent-lime-muted: rgba(204, 255, 0, 0.12);
-  --accent-lime-text: #0e1002;
-  
-  /* Trust Diagnostic Blue & Emerald */
-  --color-electric-blue: #1e40af;
-  --color-emerald-verified: #059669;
-  
-  /* Typographic Ink Roles */
-  --ink-primary: #121316;
-  --ink-secondary: #4a4d56;
-  --ink-muted: #787c87;
-  --ink-dark-primary: #f6f5f0;
-  --ink-dark-secondary: #a0a4b0;
-  --ink-dark-muted: #6b7080;
-  
+  --surface-muted: #f1f5f9;
+  --surface-dark: #0f172a;
+
+  /* Single Restrained Accent (<80% saturation, >4.5:1 contrast with white) */
+  --accent-primary: #1d4ed8;
+  --accent-primary-hover: #1e40af;
+  --accent-primary-soft: rgba(29, 78, 216, 0.08);
+
+  /* Ink Roles */
+  --ink-primary: #0f172a;
+  --ink-secondary: #475569;
+  --ink-muted: #64748b;
+  --ink-inverse: #ffffff;
+
   /* Hairline Borders */
-  --border-light: #e5e3dc;
-  --border-dark: rgba(255, 255, 255, 0.10);
-  --border-dark-hover: rgba(204, 255, 0, 0.35);
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
 
   /* Typography */
-  --font-display: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'Space Grotesk', monospace, monospace;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 html, body {
   overflow-x: clip;
   background-color: var(--surface-canvas);
   color: var(--ink-primary);
-  font-family: var(--font-display);
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hallmark Floor: Focus visible instantly */
+/* Hallmark Floor: Instant visible focus ring */
 *:focus-visible {
-  outline: 2px solid var(--accent-lime);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
-/* Reduced motion support */
+/* Hallmark Floor: Reduced motion fallback */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
     animation-duration: 0.01ms !important;
@@ -63,9 +53,6 @@ html, body {
   }
 }
 
-/* Hairline Canvas Container */
-.hairline-stage {
-  touch-action: none;
-  user-select: none;
-  cursor: crosshair;
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
 }

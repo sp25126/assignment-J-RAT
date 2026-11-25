@@ -1,150 +1,226 @@
-import React from 'react';
-import { ArrowRight, Clock, MapPin, Star, Phone, MessageCircle } from 'lucide-react';
-import HairlineHeroMotion from './HairlineHeroMotion';
-import QuickBookingWidget from './QuickBookingWidget';
+import React, { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { Star, MapPin, Phone, Check, ArrowDown } from 'lucide-react';
 
-export default function Hero({ onOpenBooking, selectedArea, onBookSuccess }) {
+const HERO_SERVICES = [
+  'Air Conditioning',
+  'Bathroom Remodeling',
+  'Plumber',
+  'Electrician',
+  'Carpenter',
+  'Painting',
+  'Waterproofing',
+  'Kitchen Remodeling',
+  'Tile contractor'
+];
+
+export default function Hero({ onOpenBooking }) {
+  const [selectedService, setSelectedService] = useState(HERO_SERVICES[0]);
+  const [phone, setPhone] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start']
+  });
+
+  // Scrollcraft: Subtle GPU-composited rise & scale on the 3D house anchor
+  const houseY = useTransform(scrollYProgress, [0, 1], [0, -36]);
+  const houseScale = useTransform(scrollYProgress, [0, 1], [1, 1.03]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (phone.length < 10) return;
+    setSubmitted(true);
+  };
+
   return (
-    <section className="relative bg-[#121316] text-[#f6f5f0] pt-12 pb-20 px-4 sm:px-8 border-b border-white/10 overflow-hidden">
-      {/* Background Architectural Grid */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:4rem_4rem] pointer-events-none"></div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
-        {/* Top Eyebrow Tag from Original Site */}
-        <div className="flex flex-wrap items-center justify-between gap-2 pb-6 border-b border-white/10 text-xs font-mono">
-          <div className="inline-flex items-center gap-2 bg-[#ccff00]/10 border border-[#ccff00]/30 px-3 py-1 rounded text-[#ccff00] font-bold uppercase tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-[#ccff00]"></span>
-            <span>PROPERTY MAINTENANCE</span>
-          </div>
-          <div className="flex items-center gap-2 text-[#a0a4b0]">
-            <div className="flex items-center text-amber-400">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
-              ))}
-            </div>
-            <span className="text-white font-bold">4.8 / 5</span>
-            <span>· Based on 353+ Google reviews</span>
-          </div>
-        </div>
-
-        {/* Main Hero Split Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 pt-8 items-start">
-          {/* Left Column: Exact Original Words from Before State (7 Cols) */}
-          <div className="lg:col-span-7 space-y-6">
-            {/* Exact Original Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.12] text-white font-display">
-              Home Hancer Services Pvt Ltd - <span className="text-[#ccff00]">Property Maintenance</span>
-            </h1>
-
-            {/* Exact Original Body Copy */}
-            <p className="text-sm sm:text-base text-[#a0a4b0] leading-relaxed font-normal">
-              Home Hancer Services is your premier partner for exceptional property maintenance and renovation in Ahmedabad. Since 2023, their dedicated team of professionals has provided a complete suite of services designed to transform and maintain your home with precision and care. Specializing in everything from electrical and plumbing repairs to sophisticated carpentry and complete bathroom renovations, they handle every project with an unwavering commitment to quality. Whether you need a simple fix or a major overhaul, Home Hancer's expert craftsmen ensure your vision for a beautiful and functional home becomes a reality.
-            </p>
-
-            {/* Action Buttons with Original Context */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <button
-                onClick={() => onOpenBooking()}
-                className="px-6 py-3 bg-[#ccff00] hover:bg-[#b8e600] active:scale-98 text-[#121316] font-mono font-bold text-xs uppercase rounded-xl flex items-center gap-2 shadow-lg transition-all cursor-pointer"
-              >
-                <span>Contact Us</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-
-              <a
-                href="https://wa.me/919157691572?text=Hello%20Home%20Hancer%20Services,%20I%20am%20interested%20in%20Property%20Maintenance.%20Please%20share%20more%20information."
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3 bg-[#1a1c21] hover:bg-[#252830] text-white font-mono font-bold text-xs uppercase rounded-xl flex items-center gap-2 border border-white/20 transition-all"
-              >
-                <MessageCircle className="w-4 h-4 text-[#ccff00] fill-current" />
-                <span>Enquire on WhatsApp</span>
-              </a>
-
-              <a
-                href="tel:9157691572"
-                className="px-5 py-3 text-xs font-mono text-[#a0a4b0] hover:text-white flex items-center gap-2"
-              >
-                <Phone className="w-3.5 h-3.5 text-[#ccff00]" />
-                <span>9157691572</span>
-              </a>
-            </div>
-
-            {/* Hairline 3D Isometric Motion Canvas */}
-            <div className="pt-4">
-              <HairlineHeroMotion />
-            </div>
+    <section
+      ref={heroRef}
+      className="relative bg-[var(--surface-canvas)] pt-14 sm:pt-20 pb-0 px-4 sm:px-8 border-b border-[var(--border-subtle)] overflow-hidden"
+    >
+      <div className="max-w-[1280px] mx-auto">
+        {/* Centered Editorial & Utilitarian Stack */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mx-auto text-center space-y-5"
+        >
+          {/* Quiet Verifiable Trust Line (Sentence case, no middle dots, uniform 16px icons) */}
+          <div className="inline-flex flex-wrap items-center justify-center gap-4 text-sm text-[var(--ink-secondary)]">
+            <span className="inline-flex items-center gap-1.5">
+              <Star className="w-4 h-4 text-[var(--ink-primary)]" strokeWidth={1.5} />
+              <span className="font-medium text-[var(--ink-primary)] tabular-nums">4.8 / 5</span>
+              <span>from 353+ Google reviews</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5">
+              <MapPin className="w-4 h-4 text-[var(--ink-muted)]" strokeWidth={1.5} />
+              <span>Vejalpur, Ahmedabad</span>
+            </span>
           </div>
 
-          {/* Right Column: "At a glance" Card from Before State (5 Cols) */}
-          <div className="lg:col-span-5 space-y-4">
-            <div className="bg-[#18191e] border border-white/15 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
-              {/* Top Accent Line */}
-              <div className="absolute top-0 inset-x-0 h-1 bg-[#ccff00]"></div>
+          {/* Headline: One weight, one color, tight tracking */}
+          <h1 className="text-3xl sm:text-5xl font-semibold tracking-[-0.03em] leading-[1.1] text-[var(--ink-primary)] break-words min-width-0">
+            Property maintenance and renovation in Ahmedabad
+          </h1>
 
-              <div className="text-[11px] font-mono text-[#ccff00] font-bold uppercase tracking-wider mb-2">
-                AT A GLANCE
+          {/* One Clear Sentence (Exact wording from before state) */}
+          <p className="text-base sm:text-lg text-[var(--ink-secondary)] leading-relaxed max-w-2xl mx-auto">
+            Home Hancer Services is your premier partner for exceptional property maintenance and renovation in Ahmedabad.
+          </p>
+        </motion.div>
+
+        {/* Horizontal 2-Input Enquiry Bar */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mx-auto mt-8"
+        >
+          {submitted ? (
+            <div className="bg-[var(--surface-card)] border border-[var(--border-subtle)] rounded-xl p-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
+              <div className="flex items-center gap-3 text-left">
+                <div className="w-8 h-8 rounded-lg bg-[var(--accent-primary-soft)] text-[var(--accent-primary)] flex items-center justify-center shrink-0">
+                  <Check className="w-4 h-4" strokeWidth={1.5} />
+                </div>
+                <div className="text-sm">
+                  <p className="font-medium text-[var(--ink-primary)]">
+                    Enquiry received for {selectedService}
+                  </p>
+                  <p className="text-[var(--ink-secondary)] tabular-nums">
+                    We will contact {phone} during business hours (Monday–Saturday, 9am–8pm).
+                  </p>
+                </div>
               </div>
-              <h3 className="text-xl font-bold text-white font-display mb-4">
+              <div className="flex items-center gap-3 shrink-0">
+                <a
+                  href={`https://wa.me/919157691572?text=${encodeURIComponent(
+                    `I want to know more about ${selectedService}. My mobile number is ${phone}.`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-4 py-2 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] rounded-lg transition-colors"
+                >
+                  Open WhatsApp
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setSubmitted(false)}
+                  className="text-sm font-medium text-[var(--ink-secondary)] hover:text-[var(--ink-primary)] px-2 py-2 cursor-pointer"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              className="bg-[var(--surface-card)] border border-[var(--border-subtle)] rounded-xl p-2 shadow-sm grid grid-cols-1 md:grid-cols-12 gap-2 items-center"
+            >
+              {/* Input 1: Select Service */}
+              <div className="md:col-span-5">
+                <label htmlFor="hero-service-select" className="sr-only">
+                  Select service
+                </label>
+                <select
+                  id="hero-service-select"
+                  value={selectedService}
+                  onChange={(e) => setSelectedService(e.target.value)}
+                  className="w-full h-11 px-3 bg-transparent text-sm font-medium text-[var(--ink-primary)] rounded-lg border border-transparent hover:bg-[var(--surface-muted)] focus:bg-[var(--surface-card)] focus:border-[var(--border-strong)] focus:outline-none transition-colors cursor-pointer"
+                >
+                  {HERO_SERVICES.map((service) => (
+                    <option key={service} value={service}>
+                      {service}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Divider on desktop */}
+              <div className="hidden md:block md:col-span-1 h-6 w-px bg-[var(--border-subtle)] mx-auto" />
+
+              {/* Input 2: Mobile Number */}
+              <div className="md:col-span-3 flex items-center h-11 px-3 rounded-lg border border-[var(--border-subtle)] md:border-transparent focus-within:border-[var(--border-strong)] bg-[var(--surface-canvas)] md:bg-transparent">
+                <span className="text-sm font-medium text-[var(--ink-muted)] mr-2 tabular-nums select-none">
+                  +91
+                </span>
+                <label htmlFor="hero-phone-input" className="sr-only">
+                  Mobile number
+                </label>
+                <input
+                  id="hero-phone-input"
+                  type="tel"
+                  inputMode="numeric"
+                  placeholder="Mobile number"
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                  required
+                  className="w-full bg-transparent text-sm font-medium text-[var(--ink-primary)] placeholder:text-[var(--ink-muted)] focus:outline-none tabular-nums"
+                />
+              </div>
+
+              {/* Primary Action */}
+              <div className="md:col-span-3">
+                <button
+                  type="submit"
+                  className="w-full h-11 px-5 text-sm font-medium text-[var(--ink-inverse)] bg-[var(--accent-primary)] hover:bg-[var(--accent-primary-hover)] active:scale-[0.99] rounded-lg transition-[transform,background-color] cursor-pointer"
+                >
+                  Contact us
+                </button>
+              </div>
+            </form>
+          )}
+
+          {/* Quiet Secondary Link & Hours below bar */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-6 text-sm text-[var(--ink-secondary)]">
+            <a
+              href="tel:9157691572"
+              className="inline-flex items-center gap-1.5 hover:text-[var(--ink-primary)] transition-colors tabular-nums"
+            >
+              <Phone className="w-4 h-4 text-[var(--ink-muted)]" strokeWidth={1.5} />
+              <span>Call 9157691572</span>
+            </a>
+            <span className="text-[var(--ink-muted)]">Monday to Saturday, 9am to 8pm</span>
+            <button
+              type="button"
+              onClick={() => onOpenBooking({ name: selectedService })}
+              className="text-[var(--accent-primary)] hover:underline font-medium cursor-pointer"
+            >
+              Add project details
+            </button>
+          </div>
+        </motion.div>
+
+        {/* Bottom Edge Anchor: 3D Architectural House Cross-Section rising into view */}
+        <motion.div
+          style={{ y: houseY, scale: houseScale }}
+          className="mt-10 sm:mt-14 max-w-4xl mx-auto relative"
+        >
+          <div className="bg-[var(--surface-card)] border border-b-0 border-[var(--border-subtle)] rounded-t-2xl pt-4 px-4 sm:pt-6 sm:px-8 shadow-sm overflow-hidden">
+            <div className="flex items-center justify-between pb-3 mb-2 border-b border-[var(--border-subtle)] text-xs sm:text-sm text-[var(--ink-secondary)]">
+              <span className="font-medium text-[var(--ink-primary)]">
                 Home Hancer Services Pvt Ltd
-              </h3>
-
-              {/* Exact Original 'What we do' */}
-              <div className="space-y-4 text-xs">
-                <div className="border-b border-white/10 pb-3">
-                  <span className="text-[#787c87] font-mono block text-[11px] mb-1">What we do:</span>
-                  <p className="text-white/90 leading-relaxed font-medium">
-                    Property Maintenance, Plumber, Painting, Carpenter, Electrician, Tile contractor, Bathroom Renovator, Real Estate Builders & Construction Company, Interior fitting contractor, Air conditioning repair shop
-                  </p>
-                </div>
-
-                {/* Exact Location */}
-                <div className="border-b border-white/10 pb-3">
-                  <span className="text-[#787c87] font-mono block text-[11px] mb-1">Location:</span>
-                  <div className="flex items-start gap-2 text-white/90">
-                    <MapPin className="w-4 h-4 text-[#ccff00] shrink-0 mt-0.5" />
-                    <p className="leading-relaxed">
-                      C-901 PNTC, Times Of India Press Road behind Titanium City Centre, Vejalpur, Ahmedabad, Gujarat, 380015
-                    </p>
-                  </div>
-                </div>
-
-                {/* Exact Business Hours */}
-                <div className="border-b border-white/10 pb-3">
-                  <span className="text-[#787c87] font-mono block text-[11px] mb-1">Business hours:</span>
-                  <div className="flex items-center justify-between text-white/90">
-                    <div className="flex items-center gap-2">
-                      <Clock className="w-4 h-4 text-[#ccff00]" />
-                      <span>Monday-Saturday: 9am-8pm</span>
-                    </div>
-                  </div>
-                  <p className="text-[11px] text-[#787c87] mt-1 font-mono">
-                    You can contact us anytime during the day with your query.
-                  </p>
-                </div>
-
-                {/* Rating Strip */}
-                <div className="flex items-center justify-between pt-1">
-                  <div className="flex items-center gap-2">
-                    <div className="flex text-amber-400">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                      ))}
-                    </div>
-                    <span className="text-white font-bold font-mono">4.8 / 5</span>
-                  </div>
-                  <span className="text-[11px] font-mono text-[#a0a4b0]">353+ Google reviews</span>
-                </div>
-              </div>
+              </span>
+              <a
+                href="#services-3d"
+                className="inline-flex items-center gap-1.5 text-[var(--accent-primary)] font-medium hover:underline"
+              >
+                <span>Explore 3D services</span>
+                <ArrowDown className="w-4 h-4" strokeWidth={1.5} />
+              </a>
             </div>
 
-            {/* Quick Contact Form */}
-            <QuickBookingWidget 
-              onBookSuccess={onBookSuccess} 
-              initialArea={selectedArea} 
-            />
+            <div className="relative flex justify-center">
+              <img
+                src="/assets/3d-house-cross-section.png"
+                alt="3D architectural house cross-section showing bathroom, bedroom air conditioning, office, living room, laundry, and kitchen"
+                className="w-full max-w-2xl h-auto object-contain block mx-auto"
+              />
+            </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
