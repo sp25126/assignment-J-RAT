@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
-import ExplodedHouse3D from './components/ExplodedHouse3D';
+import RealProjectsCarousel from './components/RealProjectsCarousel';
 import ServicesHub from './components/ServicesHub';
 import BeforeAfterSlider from './components/BeforeAfterSlider';
 import ReviewsSection from './components/ReviewsSection';
@@ -45,8 +45,8 @@ export default function App() {
           onBookSuccess={(details) => handleOpenBooking({ name: details.service })}
         />
 
-        {/* 3. Blender 5.2 Exploded 3D House with Scroll & Room Camera Zoom */}
-        <ExplodedHouse3D
+        {/* 2. Section 2: Real Site Assets in Autoplaying Carousel View */}
+        <RealProjectsCarousel
           onOpenBooking={(service) => handleOpenBooking(service)}
         />
 
